@@ -1,12 +1,16 @@
+import * as React from 'react';
 import { NumberParam, useQueryParam, withDefault } from 'use-query-params';
 import axios from 'axios';
 import {
   useQuery,
 } from 'react-query';
+import { useHistory } from 'react-router-dom';
 import { PAGE_SIZE, RE_FETCH_INTERVAL } from '../../variables/constants';
 import END_POINTS from '../../variables/endpoints';
+import { Teams } from '../../variables/types';
 
 const useDashboard = () => {
+  const history = useHistory();
   const [pageSize, setPageSize] = useQueryParam('page-size', withDefault(NumberParam, PAGE_SIZE));
   const { data: dueToday, isFetching: dueTodayIsFetching } = useQuery(
     END_POINTS.DUE_TODAY.key,
@@ -74,6 +78,13 @@ const useDashboard = () => {
   // TODO: Filter based on time window, page size and remove duplicate
   const getmustGoDataData = () => mustGo;
 
+  const onTeamChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+    const { value } = event.target;
+    if (value !== Teams.Dashboard) {
+      history.push(`/team/${value}`);
+    }
+  };
+
   return {
     dueLaterIsFetching,
     dueTodayIsFetching,
@@ -84,6 +95,7 @@ const useDashboard = () => {
     sameDayShippingData: getSameDayShippingData,
     mustGoData: getmustGoDataData,
     updatePageSize,
+    onTeamChange,
   };
 };
 

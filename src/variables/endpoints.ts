@@ -15,6 +15,10 @@ const END_POINTS = {
     url: 'https://4091006.extforms.netsuite.com/app/site/hosting/scriptlet.nl?script=426&deploy=1&compid=4091006&h=773e16683a651670d742',
     key: 'MUST_GO',
   },
+  ALPHA: {
+    url: 'https://4091006.extforms.netsuite.com/app/site/hosting/scriptlet.nl?script=416&deploy=1&compid=4091006&h=a9fc98e773a9fbcc51f0',
+    key: 'ALPHA',
+  },
 };
 
 export default END_POINTS;
