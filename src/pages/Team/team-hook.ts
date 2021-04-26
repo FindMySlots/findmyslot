@@ -17,17 +17,17 @@ const useTeam = () => {
   const history = useHistory();
   const { id } = useParams<RouteProp>();
   const [pageSize, setPageSize] = useQueryParam('page-size', withDefault(NumberParam, PAGE_SIZE));
-  const { data: teamData, isFetching } = useQuery(
-    END_POINTS.DUE_TODAY.key,
+  // @ts-ignore
+  const { data: teamData, isFetching } = useQuery(END_POINTS[id as Teams].key,
     async () => {
-      const res = await axios.get(END_POINTS.DUE_TODAY.url);
+      // @ts-ignore
+      const res = await axios.get(END_POINTS[id].url);
       return res.data;
     },
     {
       // Refetch the data every second
       refetchInterval: RE_FETCH_INTERVAL,
-    },
-  );
+    });
 
   const updatePageSize = (size: number | null) => () => {
     setPageSize(size);
