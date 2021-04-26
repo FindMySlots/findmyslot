@@ -3,6 +3,7 @@ import Typography from '@material-ui/core/Typography';
 import { PrimaryButton } from '../../components/Buttons';
 import COLORS from '../../variables/colors';
 
+// TODO: Cleanup
 export const WelcomeMessage = styled(Typography)({
   fontWeight: 'bold',
   marginBottom: 8,
