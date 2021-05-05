@@ -12,6 +12,7 @@ import {
 } from '@material-ui/core';
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+// import {Check} from "@material-ui/icons";
 
 interface Props {
   slotsList: any[],
@@ -53,6 +54,17 @@ const DataTable = ({
     setStopNotifications(updatedStopNotifications);
   };
 
+  const notifyAll = stopNotifications?.length === 0;
+
+  const onNotificationChange = () => {
+    if (notifyAll) {
+      const centers = slotsList?.map((center: any) => center.center_id) || [];
+      setStopNotifications(centers);
+    } else {
+      setStopNotifications([]);
+    }
+  };
+
   return (
     <TableContainer className={classes.tableContainer}>
       <Table stickyHeader>
@@ -68,6 +80,12 @@ const DataTable = ({
               Sessions
             </TableCell>
             <TableCell>
+              <Checkbox
+                checked={notifyAll}
+                name="notification"
+                color="primary"
+                onChange={onNotificationChange}
+              />
               Notification
               <Tooltip title="Uncheck this if you wish to stop notification for individual centers" aria-label="Preview">
                 <HelpOutlineIcon className={classes.icon} />

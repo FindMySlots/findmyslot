@@ -46,8 +46,6 @@ const useDashboard = () => {
       const available = res.data?.centers?.filter((center: any) => center.sessions.find((session: any) => session.min_age_limit === (ageGroup || 18) && session.available_capacity > 0));
       // @ts-ignore
       const availableForNotification = available.filter((center: any) => stopNotifications.indexOf(center.center_id.toString()) === -1);
-      console.log(available);
-      console.log(availableForNotification);
       if (availableForNotification?.length > 0) {
         if (enableVoiceNotification) {
           speak({ text: 'The Vaccine is available. Hurry!' });
