@@ -56,7 +56,7 @@ const useDashboard = () => {
         if (enableNotification) {
           const notification = new Notification('Vaccine available');
           notification.onclick = () => {
-            window.location.href = 'https://www.cowin.gov.in/home';
+            window.location.href = 'https://selfregistration.cowin.gov.in/';
           };
         }
       }

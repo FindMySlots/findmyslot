@@ -24,6 +24,12 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
     color: COLORS.white,
     fontSize: '16px',
     marginBottom: theme.spacing(1),
+    padding: theme.spacing(2),
+  },
+  linkClass: {
+    color: COLORS.violet,
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1),
   },
 }));
 
@@ -52,7 +58,12 @@ const Dashboard = () => {
   return (
     <Box width="100%">
       <Typography className={classes.topLabel}>
-        This website does not collect your data.
+        Keep this page open in browser, enable the Voice and Push Notification. Whenever the slot is available you&#39;ll receive the notification.
+        Click on push notification should take you to the
+        {' '}
+        <Link className={classes.linkClass} href="https://selfregistration.cowin.gov.in/">Co-Win</Link>
+        {' '}
+        Portal. This website does not collect your data.
       </Typography>
       <Filter
         refetchInterval={refetchInterval}
