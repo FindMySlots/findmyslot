@@ -109,7 +109,7 @@ const Dashboard = () => {
         <Link className={classes.link} href="https://github.com/nitish-kalra-9">Nitish</Link>
       </Typography>
       <Typography align="center" className={classes.footerFeedback}>
-        Please report the issues
+        Please report the issues/suggestions
         {' '}
         <Link className={classes.link} href="https://github.com/mehulcse/findmyslot/issues">here</Link>
         {' '}
