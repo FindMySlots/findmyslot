@@ -1,6 +1,6 @@
 To start the project, will need to do
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-4-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-5-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 Project Link: https://d1mtd06aa2wbpa.cloudfront.net/
@@ -46,6 +46,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/jiteshmanglani"><img src="https://avatars.githubusercontent.com/u/57885928?v=4?s=100" width="100px;" alt=""/><br /><sub><b>jiteshmanglani</b></sub></a><br /><a href="#ideas-jiteshmanglani" title="Ideas, Planning, & Feedback">🤔</a> <a href="https://github.com/mehulcse/findmyslot/commits?author=jiteshmanglani" title="Tests">⚠️</a></td>
     <td align="center"><a href="https://github.com/jjmanglani01"><img src="https://avatars.githubusercontent.com/u/10581529?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Jitesh Manglani</b></sub></a><br /><a href="#ideas-jjmanglani01" title="Ideas, Planning, & Feedback">🤔</a> <a href="https://github.com/mehulcse/findmyslot/commits?author=jjmanglani01" title="Tests">⚠️</a></td>
     <td align="center"><a href="http://durgaprasad-budhwani.com/"><img src="https://avatars.githubusercontent.com/u/993962?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Durgaprasad</b></sub></a><br /><a href="#ideas-Durgaprasad-Budhwani" title="Ideas, Planning, & Feedback">🤔</a></td>
+    <td align="center"><a href="https://github.com/nitish-kalra-9"><img src="https://avatars.githubusercontent.com/u/69498008?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Nitish Kalra</b></sub></a><br /><a href="#ideas-nitish-kalra-9" title="Ideas, Planning, & Feedback">🤔</a></td>
   </tr>
 </table>
 
