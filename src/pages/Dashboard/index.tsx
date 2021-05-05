@@ -22,6 +22,8 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
     display: 'flex',
     backgroundColor: COLORS.fontBlack,
     color: COLORS.white,
+    fontSize: '16px',
+    marginBottom: theme.spacing(1),
   },
 }));
 
@@ -49,8 +51,8 @@ const Dashboard = () => {
   const classes = useStyles();
   return (
     <Box width="100%">
-      <Typography>
-        This website do not collect you data.
+      <Typography className={classes.topLabel}>
+        This website does not collect your data.
       </Typography>
       <Filter
         refetchInterval={refetchInterval}
