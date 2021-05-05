@@ -24,7 +24,6 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
   topLabel: {
     width: '100%',
     justifyContent: 'center',
-    display: 'flex',
     backgroundColor: COLORS.fontBlack,
     color: COLORS.white,
     fontSize: '16px',
