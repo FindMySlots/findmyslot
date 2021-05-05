@@ -34,6 +34,8 @@ const COLORS = {
   selectedCellBackground: 'rgba(17, 173, 248, 0.05)',
   lightGrayWithOpacity: 'rgba(130,135,140, 0.5)',
   hoverButtonGrey: 'rgba(0, 0, 0, 0.04)',
+  emeraldOverlay: 'rgba(67, 212, 106, 0.5)',
+  carnationOverlay: 'rgba(246, 80, 80, 0.5)',
 
   logoGradient: 'linear-gradient(180deg, #71E954 12.26%, #11ADF8 45.36%, #9730C2 87.03%)',
   navyBlackGradient: 'linear-gradient(180deg, #000000 0%, #1B243D 98.5%)',

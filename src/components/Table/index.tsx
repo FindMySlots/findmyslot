@@ -5,14 +5,13 @@ import {
   TableRow,
   TableCell,
   TableBody,
-  Typography,
   TableContainer,
   Checkbox,
   Tooltip,
 } from '@material-ui/core';
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
-// import {Check} from "@material-ui/icons";
+import Row from './Row';
 
 interface Props {
   slotsList: any[],
@@ -39,20 +38,6 @@ const DataTable = ({
   ageGroup,
 } : Props) => {
   const classes = useStyles();
-
-  const isChecked = (centerID: number) => stopNotifications.indexOf(centerID.toString()) === -1;
-
-  const handleChange = (centerID: number) => {
-    const currentIndex = stopNotifications.indexOf(centerID.toString());
-    let updatedStopNotifications;
-    if (currentIndex === -1) {
-      updatedStopNotifications = [...stopNotifications, centerID];
-    } else {
-      updatedStopNotifications = [...stopNotifications];
-      updatedStopNotifications.splice(currentIndex, 1);
-    }
-    setStopNotifications(updatedStopNotifications);
-  };
 
   const notifyAll = stopNotifications?.length === 0;
 
@@ -95,34 +80,13 @@ const DataTable = ({
         </TableHead>
         <TableBody>
           {slotsList?.length > 0 ? slotsList?.map((slot: any) => (
-            <TableRow key={slot.center_id}>
-              <TableCell>
-                {slot.name}
-              </TableCell>
-              <TableCell>
-                <Typography>
-                  {slot.address}
-                </Typography>
-                <Typography>
-                  {slot.pincode}
-                </Typography>
-              </TableCell>
-              <TableCell>
-                {slot.sessions?.filter((session: any) => session.min_age_limit === ageGroup).map((session: any) => (
-                  <Typography key={session.session_id}>
-                    {`${session.date} - ${session.available_capacity} doses - ${session.vaccine}`}
-                  </Typography>
-                ))}
-              </TableCell>
-              <TableCell>
-                <Checkbox
-                  checked={isChecked(slot.center_id)}
-                  onChange={() => handleChange(slot.center_id)}
-                  name="notification"
-                  color="primary"
-                />
-              </TableCell>
-            </TableRow>
+            <Row
+              ageGroup={ageGroup}
+              setStopNotifications={setStopNotifications}
+              slot={slot}
+              stopNotifications={stopNotifications}
+              key={slot.center_id}
+            />
           )) : (<TableRow><TableCell colSpan={4} align="center">No slots are available as of now. Don&#39;t worry, I will notify you as soon as I find the slot.</TableCell></TableRow>)}
         </TableBody>
       </Table>
