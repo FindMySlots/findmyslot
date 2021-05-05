@@ -3,7 +3,7 @@ To start the project, will need to do
 [![All Contributors](https://img.shields.io/badge/all_contributors-5-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
-Project Link: https://d1mtd06aa2wbpa.cloudfront.net/
+Project Link: https://www.findmyslots.com/
 
 
 To Start
