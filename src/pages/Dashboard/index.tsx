@@ -97,10 +97,13 @@ const Dashboard = () => {
         <span style={{ color: '#ea4e4e' }}>&#9829;</span>
         {' '}
         by
-        <Link className={classes.link} href="https://github.com/mehulcse">Mehul Thakkar</Link>
+        <Link className={classes.link} href="https://github.com/mehulcse">Mehul</Link>
+        {' '}
+        ,
+        <Link className={classes.link} href="https://github.com/jjmanglani01">Jitesh</Link>
         {' '}
         &
-        <Link className={classes.link} href="https://github.com/jjmanglani01">Jitesh Manglani</Link>
+        <Link className={classes.link} href="https://github.com/Durgaprasad-Budhwani">Durgaprasad</Link>
       </Typography>
       <Typography align="center" className={classes.footerFeedback}>
         Please report the issues
