@@ -5,6 +5,7 @@ import Filter from '../../components/Filter';
 import useDashboard from './dashboard-hook';
 import Loader from '../../components/Loader/loader';
 import DataTable from '../../components/Table';
+import COLORS from '../../variables/colors';
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
   footer: {
@@ -14,6 +15,13 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
   },
   link: {
     marginLeft: theme.spacing(1),
+  },
+  topLabel: {
+    width: '100%',
+    justifyContent: 'center',
+    display: 'flex',
+    backgroundColor: COLORS.fontBlack,
+    color: COLORS.white,
   },
 }));
 
@@ -41,6 +49,9 @@ const Dashboard = () => {
   const classes = useStyles();
   return (
     <Box width="100%">
+      <Typography>
+        This website do not collect you data.
+      </Typography>
       <Filter
         refetchInterval={refetchInterval}
         setRefetchInterval={setRefetchInterval}
@@ -69,6 +80,9 @@ const Dashboard = () => {
         {' '}
         by
         <Link className={classes.link} href="https://github.com/mehulcse">Mehul Thakkar</Link>
+        {' '}
+        &
+        <Link className={classes.link} href="https://github.com/jiteshmanglani">Jitesh Manglani</Link>
       </Typography>
       <Loader open={loading} />
     </Box>

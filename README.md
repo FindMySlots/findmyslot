@@ -19,16 +19,20 @@ yarn install
 yarn start
 ```
 
-
+## APIs
+We are using Co-Win's [Public APIs](https://apisetu.gov.in/public/marketplace/api/cowin).
 
 ## Scope
 
 - [X] District Based Calendar
 - [ ] Pin code Based search
 
+## Credit
+- Thanks to fantastic folks working at [Co-Win](https://www.cowin.gov.in/home) to support world's largest vaccination drive.
+
 ## Contributing
 
-Contributions are welcome, especially for the missing features! Pull requests and issues are very welcome.
+Contributions are welcome, especially for the missing features! Pull requests and issues are very welcome. Kindly update the footer in the Dashboard component with contribution.
 
 ## License
 
