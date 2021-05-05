@@ -109,7 +109,13 @@ const DataTable = ({
               {
                 matches ? 'NOTIF' : 'Notification'
               }
-              <Tooltip title={`${matches ? 'Notification:' : ''}Uncheck this if you wish to stop notification for individual centers`} aria-label="Preview">
+              <Tooltip
+                title={
+                  `${matches ? 'Notification:' : ''}
+                  Uncheck this if you wish to stop notification for individual centers`
+                }
+                aria-label="Preview"
+              >
                 <HelpOutlineIcon className={classes.icon} />
               </Tooltip>
             </TableCell>

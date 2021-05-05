@@ -2,11 +2,14 @@ import React from 'react';
 import { Box, Link, Typography, useMediaQuery } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import Fab from '@material-ui/core/Fab';
+import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import Filter from '../../components/Filter';
 import useDashboard from './dashboard-hook';
 import Loader from '../../components/Loader/loader';
 import DataTable from '../../components/Table';
 import COLORS from '../../variables/colors';
+import ScrollTop from '../../components/ScrollTop';
 
 interface StyleProps {
   matches: boolean
@@ -132,6 +135,15 @@ const Dashboard = () => {
         <Link href="mailto:mehulthakkar02@gmail.com">mehulthakkar02@gmail.com</Link>
       </Typography>
       <Loader open={loading} />
+      {
+        matches && (
+          <ScrollTop>
+            <Fab color="secondary" size="small" aria-label="scroll back to top">
+              <KeyboardArrowUpIcon />
+            </Fab>
+          </ScrollTop>
+        )
+      }
     </Box>
   );
 };
