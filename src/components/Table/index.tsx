@@ -22,7 +22,7 @@ interface Props {
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
   tableContainer: {
-    maxHeight: '90vh',
+    maxHeight: '80vh',
   },
   icon: {
     height: '16px',

@@ -103,8 +103,11 @@ const Dashboard = () => {
         ,
         <Link className={classes.link} href="https://github.com/jjmanglani01">Jitesh</Link>
         {' '}
-        &
+        ,
         <Link className={classes.link} href="https://github.com/Durgaprasad-Budhwani">Durgaprasad</Link>
+        {' '}
+        &
+        <Link className={classes.link} href="https://github.com/nitish-kalra-9">Nitish</Link>
       </Typography>
       <Typography align="center" className={classes.footerFeedback}>
         Please report the issues
