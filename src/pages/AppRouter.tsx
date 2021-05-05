@@ -5,7 +5,6 @@ import Box from '@material-ui/core/Box';
 
 import Dashboard from './Dashboard';
 import ErrorPage from '../components/ErrorPage';
-import Team from './Team';
 
 const AppRouter = () => (
   <Box display="flex" width="100%" height="100%">
@@ -13,7 +12,6 @@ const AppRouter = () => (
       <QueryParamProvider ReactRouterRoute={Route}>
         <Switch>
           <Route path="/" component={Dashboard} exact />
-          <Route path="/team/:id" component={Team} exact />
           <Route path="*" component={ErrorPage} exact />
         </Switch>
       </QueryParamProvider>

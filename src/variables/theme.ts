@@ -22,16 +22,16 @@ const overrides = {
   MuiTableCell: {
     root: {
       fontSize: 13,
-      color: COLORS.deepGray,
+      color: COLORS.fontBlack,
       borderBottom: `1px dashed ${COLORS.lightGray2}`,
       lineHeight: '16px',
       height: '46px',
     },
     head: {
-      fontSize: 11,
-      color: COLORS.lightGray,
+      fontSize: 16,
+      color: COLORS.black,
       borderBottom: `1px solid ${COLORS.lightGray2}`,
-      lineHeight: '13px',
+      lineHeight: '20px',
       padding: '8px !important',
       'text-transform': 'uppercase !important',
       verticalAlign: 'bottom',

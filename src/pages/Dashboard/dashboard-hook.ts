@@ -1,101 +1,101 @@
-import * as React from 'react';
-import { NumberParam, useQueryParam, withDefault } from 'use-query-params';
+import { useEffect, useRef } from 'react';
+import { NumberParam, useQueryParam, withDefault, BooleanParam, ArrayParam } from 'use-query-params';
 import axios from 'axios';
 import {
   useQuery,
+  focusManager,
 } from 'react-query';
-import { useHistory } from 'react-router-dom';
-import { PAGE_SIZE, RE_FETCH_INTERVAL } from '../../variables/constants';
+import { format } from 'date-fns';
 import END_POINTS from '../../variables/endpoints';
-import { Teams } from '../../variables/types';
+import useSpeechSynthesis from '../../util/useSpeechSynthesis';
 
 const useDashboard = () => {
-  const history = useHistory();
-  const [pageSize, setPageSize] = useQueryParam('page-size', withDefault(NumberParam, PAGE_SIZE));
-  const { data: dueToday, isFetching: dueTodayIsFetching } = useQuery(
-    END_POINTS.DUE_TODAY.key,
+  const [selectedState, setSelectedState] = useQueryParam('state', withDefault(NumberParam, 0));
+  const [selectedDistrict, setSelectedDistrict] = useQueryParam('district', withDefault(NumberParam, 0));
+  const [refetchInterval, setRefetchInterval] = useQueryParam('interval', withDefault(NumberParam, 1));
+  const [enableVoiceNotification, setEnableVoiceNotification] = useQueryParam('voice', withDefault(BooleanParam, false));
+  const [enableNotification, setEnableNotification] = useQueryParam('notification', withDefault(BooleanParam, false));
+  const [stopNotifications, setStopNotifications] = useQueryParam('stopNotifications', withDefault(ArrayParam, []));
+  const [ageGroup, setAgeGroup] = useQueryParam('age', withDefault(NumberParam, 18));
+  const { speak } = useSpeechSynthesis({});
+  const date = useRef(format(new Date(), 'dd-MM-yyyy'));
+  const { data: statesList, isFetching: loadingStates } = useQuery(
+    END_POINTS.State.key,
     async () => {
-      const res = await axios.get(END_POINTS.DUE_TODAY.url);
+      const res = await axios.get(END_POINTS.State.url);
       return res.data;
-    },
-    {
-      // Refetch the data every second
-      refetchInterval: RE_FETCH_INTERVAL,
     },
   );
 
-  const { data: dueLater, isFetching: dueLaterIsFetching } = useQuery(
-    END_POINTS.DUE_LATER.key,
+  const { data: districts, isFetching: loadingDistrict } = useQuery(
+    [END_POINTS.District.key, selectedState],
     async () => {
-      const res = await axios.get(END_POINTS.DUE_LATER.url);
+      const res = await axios.get(`${END_POINTS.District.url}/${selectedState}`);
       return res.data;
     },
     {
-      // Refetch the data every second
-      refetchInterval: RE_FETCH_INTERVAL,
+      enabled: !!selectedState,
     },
   );
 
-  const { data: sameDayShipping, isFetching: sameDayShippingIsFetching } = useQuery(
-    END_POINTS.SAME_DAY_SHIPPING.key,
+  const { data: slotsList, isFetching: loadingSlots } = useQuery(
+    [END_POINTS.Calendar.key, selectedState, selectedDistrict, ageGroup],
     async () => {
-      const res = await axios.get(END_POINTS.SAME_DAY_SHIPPING.url);
-      return res.data;
+      const res = await axios.get(`${END_POINTS.Calendar.url}${selectedDistrict}&date=${date.current}`);
+      const available = res.data?.centers?.filter((center: any) => center.sessions.find((session: any) => session.min_age_limit === (ageGroup || 18) && session.available_capacity > 0));
+      // @ts-ignore
+      const availableForNotification = available.filter((center: any) => stopNotifications.indexOf(center.center_id.toString()) === -1);
+      if (availableForNotification?.length > 0) {
+        if (enableVoiceNotification) {
+          speak({ text: 'The Vaccine is available. Hurry!' });
+          const audio = new Audio(
+            'https://media.geeksforgeeks.org/wp-content/uploads/20190531135120/beep.mp3',
+          );
+          audio.play();
+        }
+        if (enableNotification) {
+          const notification = new Notification('Vaccine available');
+          notification.onclick = () => {
+            window.location.href = 'https://www.cowin.gov.in/home';
+          };
+        }
+      }
+      return available;
     },
     {
       // Refetch the data every second
-      refetchInterval: RE_FETCH_INTERVAL,
+      refetchInterval: 1000 * 60 * refetchInterval,
+      enabled: !!selectedDistrict,
     },
   );
 
-  const { data: mustGo, isFetching: mustGoIsFetching } = useQuery(
-    END_POINTS.MUST_GO.key,
-    async () => {
-      const res = await axios.get(END_POINTS.MUST_GO.url);
-      return res.data;
-    },
-    {
-      // Refetch the data every second
-      refetchInterval: RE_FETCH_INTERVAL,
-    },
-  );
+  useEffect(() => {
+    focusManager.setFocused(true);
+  }, []);
 
-  const updatePageSize = (size: number | null) => () => {
-    setPageSize(size);
-  };
-
-  console.log(pageSize);
-
-  // TODO: Filter based on time window, page size and remove duplicate
-  const getDueTodayData = () => dueToday;
-
-  // TODO: Filter based on time window, page size and remove duplicate
-  const getDueLaterData = () => dueLater;
-
-  // TODO: Filter based on time window, page size and remove duplicate
-  const getSameDayShippingData = () => sameDayShipping;
-
-  // TODO: Filter based on time window, page size and remove duplicate
-  const getmustGoDataData = () => mustGo;
-
-  const onTeamChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-    const { value } = event.target;
-    if (value !== Teams.Dashboard) {
-      history.push(`/team/${value}`);
-    }
-  };
+  if (enableNotification && Notification && Notification.permission !== 'granted') {
+    Notification.requestPermission();
+  }
 
   return {
-    dueLaterIsFetching,
-    dueTodayIsFetching,
-    sameDayShippingIsFetching,
-    mustGoIsFetching,
-    dueTodayData: getDueTodayData,
-    dueLaterData: getDueLaterData,
-    sameDayShippingData: getSameDayShippingData,
-    mustGoData: getmustGoDataData,
-    updatePageSize,
-    onTeamChange,
+    stopNotifications,
+    setStopNotifications,
+    loading: loadingStates || loadingSlots || loadingDistrict,
+    refetchInterval,
+    setRefetchInterval,
+    districtsList: districts?.districts || [],
+    selectedDistrict,
+    setSelectedDistrict,
+    selectedState,
+    setSelectedState,
+    statesList: statesList?.states || [],
+    enableVoiceNotification,
+    setEnableVoiceNotification,
+    enableNotification,
+    setEnableNotification,
+    slotsList,
+    ageGroup,
+    setAgeGroup,
   };
 };
 

@@ -10,16 +10,12 @@ export enum ErrorPageType {
   Error = 'error',
 }
 
-export enum Teams {
-  Dashboard = 'DASHBOARD',
-  Alpha = 'ALPHA',
-  Dragon = 'DRAGON',
-  Ephraim = 'EPHRAIM',
-  Epsilon = 'EPSILON',
-  Knights = 'KNIGHTS',
-  Kronos = 'KRONOS',
-  Omega = 'OMEGA',
-  Phoenix = 'PHOENIX',
-  Sparta = 'SPARTA',
-  Viking = 'VIKING',
+export interface State {
+  state_id: number,
+  state_name: string,
+}
+
+export interface District {
+  district_id: number,
+  district_name: string,
 }

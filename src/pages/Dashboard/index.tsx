@@ -2,40 +2,54 @@ import React from 'react';
 import { Box } from '@material-ui/core';
 import Filter from '../../components/Filter';
 import useDashboard from './dashboard-hook';
-import { Teams } from '../../variables/types';
+import Loader from '../../components/Loader/loader';
+import DataTable from '../../components/Table';
 
 const Dashboard = () => {
   const {
-    dueLaterIsFetching,
-    dueTodayIsFetching,
-    sameDayShippingIsFetching,
-    mustGoIsFetching,
-    dueTodayData,
-    dueLaterData,
-    sameDayShippingData,
-    mustGoData,
-    updatePageSize,
-    onTeamChange,
+    loading,
+    selectedState,
+    setSelectedState,
+    statesList,
+    districtsList,
+    selectedDistrict,
+    setSelectedDistrict,
+    refetchInterval,
+    setRefetchInterval,
+    enableVoiceNotification,
+    setEnableVoiceNotification,
+    enableNotification,
+    setEnableNotification,
+    slotsList,
+    stopNotifications,
+    setStopNotifications,
+    ageGroup,
+    setAgeGroup,
   } = useDashboard();
-  console.log({
-    dueLaterIsFetching,
-    dueTodayIsFetching,
-    sameDayShippingIsFetching,
-    mustGoIsFetching,
-    dueTodayData,
-    dueLaterData,
-    sameDayShippingData,
-    mustGoData,
-  });
   return (
     <Box width="100%">
       <Filter
-        updatePageSize={updatePageSize}
-        onTeamChange={onTeamChange}
-        selectedCell={Teams.Dashboard}
+        refetchInterval={refetchInterval}
+        setRefetchInterval={setRefetchInterval}
+        statesList={statesList}
+        setSelectedState={setSelectedState}
+        selectedState={selectedState}
+        districtsList={districtsList}
+        selectedDistrict={selectedDistrict}
+        setSelectedDistrict={setSelectedDistrict}
+        enableVoiceNotification={enableVoiceNotification}
+        setEnableVoiceNotification={setEnableVoiceNotification}
+        enableNotification={enableNotification}
+        setEnableNotification={setEnableNotification}
+        ageGroup={ageGroup}
+        setAgeGroup={setAgeGroup}
       />
-      {/* TODO: Render 4 tables based on the data, The individual loader should go in the same table. */}
-      {/* We need to display loader only once and not for each re-fetch. */}
+      <DataTable
+        slotsList={slotsList}
+        stopNotifications={stopNotifications}
+        setStopNotifications={setStopNotifications}
+      />
+      <Loader open={loading} />
     </Box>
   );
 };

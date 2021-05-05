@@ -11,6 +11,7 @@ const COLORS = {
   medGray: '#515659',
   chipGray: '#e7e9ec',
   black: '#000000',
+  fontBlack: '#333333',
   lightGray: '#82878C',
   lightActiveColor: '#3F4143',
   lightGray2: '#CFD3DA',

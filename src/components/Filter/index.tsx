@@ -1,50 +1,182 @@
 import React from 'react';
-import { Box, MenuItem } from '@material-ui/core';
-import { PrimaryButton } from '../Buttons';
-import { PAGE_SIZE, TEAMS } from '../../variables/constants';
+import {
+  Box,
+  MenuItem,
+  FormControl,
+  InputLabel,
+  Checkbox,
+  FormControlLabel,
+  useMediaQuery,
+} from '@material-ui/core';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import times from 'lodash.times';
 import SelectBox from '../Select';
-import { Teams } from '../../variables/types';
+import { District, State } from '../../variables/types';
+import COLORS from '../../variables/colors';
 
 interface Props {
-  updatePageSize: Function,
-  onTeamChange: (event: React.ChangeEvent<{ value: unknown }>) => void,
-  selectedCell: Teams
+  selectedState?: string | number,
+  setSelectedState: Function,
+  statesList: State[],
+  districtsList: District[],
+  selectedDistrict?: string | number,
+  setSelectedDistrict: Function,
+  refetchInterval: number,
+  setRefetchInterval: Function,
+  enableVoiceNotification: boolean,
+  setEnableVoiceNotification: Function,
+  enableNotification: boolean,
+  setEnableNotification: Function,
+  ageGroup: number | string,
+  setAgeGroup: Function,
 }
 
-const Filter = ({ updatePageSize, onTeamChange, selectedCell } : Props) => (
-  <Box
-    justifyContent="space-between"
-    display="flex"
-    flexDirection="row"
-    width="100%"
-  >
-    <Box>
-      Clock
+const useStyles = makeStyles((theme: Theme) => createStyles({
+  formControl: {
+    margin: theme.spacing(1),
+    width: 240,
+    '& .MuiInputBase-root': {
+      marginTop: theme.spacing(3),
+    },
+  },
+  label: {
+    width: 280,
+    color: COLORS.black,
+    fontSize: '18px',
+    marginBottom: theme.spacing(2),
+  },
+}));
+
+const Filter = ({
+  selectedState,
+  setSelectedState,
+  statesList,
+  districtsList,
+  selectedDistrict,
+  setSelectedDistrict,
+  refetchInterval,
+  setRefetchInterval,
+  enableVoiceNotification,
+  setEnableVoiceNotification,
+  enableNotification,
+  setEnableNotification,
+  ageGroup,
+  setAgeGroup,
+} : Props) => {
+  const classes = useStyles();
+  const matches = useMediaQuery('(max-width:768px)');
+  const handleStateChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+    setSelectedState(event.target.value);
+    setSelectedDistrict(0);
+  };
+
+  const handleDistrictChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+    setSelectedDistrict(event.target.value);
+  };
+
+  const handleRefetchChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+    setRefetchInterval(event.target.value);
+  };
+
+  const handleNotificationChange = () => {
+    setEnableNotification(!enableNotification);
+  };
+
+  const handleVoiceNotificationChange = () => {
+    setEnableVoiceNotification(!enableVoiceNotification);
+  };
+
+  const handleAgeGroupChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+    setAgeGroup(event.target.value);
+  };
+
+  return (
+    <Box
+      justifyContent="space-between"
+      display="flex"
+      flexDirection={matches ? 'column' : 'row'}
+      alignItems="center"
+      width="100%"
+    >
+      <FormControl className={classes.formControl}>
+        <InputLabel id="state" className={classes.label}>State</InputLabel>
+        <SelectBox
+          labelId="state"
+          disableUnderline
+          value={selectedState}
+          onChange={handleStateChange}
+        >
+          <MenuItem value={0} key={0} disabled>--------Select State--------</MenuItem>
+          {statesList?.map((state: State) => (
+            <MenuItem value={state.state_id} key={state.state_id}>{state.state_name}</MenuItem>
+          ))}
+        </SelectBox>
+      </FormControl>
+      <FormControl className={classes.formControl}>
+        <InputLabel id="district" className={classes.label}>District</InputLabel>
+        <SelectBox
+          labelId="district"
+          disableUnderline
+          value={selectedDistrict}
+          onChange={handleDistrictChange}
+        >
+          <MenuItem value={0} key={0} disabled>--------Select District--------</MenuItem>
+          {districtsList?.map((district: District) => (
+            <MenuItem value={district.district_id} key={district.district_id}>{district.district_name}</MenuItem>
+          ))}
+        </SelectBox>
+      </FormControl>
+      <FormControl className={classes.formControl}>
+        <InputLabel id="age" className={classes.label}>Age Group</InputLabel>
+        <SelectBox
+          labelId="age"
+          disableUnderline
+          value={ageGroup}
+          onChange={handleAgeGroupChange}
+        >
+          <MenuItem value={0} key={0} disabled>--------Select Age Group--------</MenuItem>
+          <MenuItem value={18} key={1}>18-45</MenuItem>
+          <MenuItem value={45} key={2}>45+</MenuItem>
+        </SelectBox>
+      </FormControl>
+      <FormControl className={classes.formControl}>
+        <InputLabel id="refreshTime" className={classes.label}>Refresh Time Interval (In Minutes)</InputLabel>
+        <SelectBox
+          labelId="refreshTime"
+          disableUnderline
+          value={refetchInterval}
+          onChange={handleRefetchChange}
+        >
+          <MenuItem value={0} key={0} disabled>-----Refresh Time Interval-----</MenuItem>
+          {times(30, (time: number) => (
+            <MenuItem value={time + 1} key={time + 1}>{`${time + 1} Minute(s)`}</MenuItem>
+          ))}
+        </SelectBox>
+      </FormControl>
+      <FormControlLabel
+        control={(
+          <Checkbox
+            checked={enableVoiceNotification}
+            onChange={handleVoiceNotificationChange}
+            name="VoiceNotification"
+            color="primary"
+          />
+        )}
+        label="Voice Notification"
+      />
+      <FormControlLabel
+        control={(
+          <Checkbox
+            checked={enableNotification}
+            onChange={handleNotificationChange}
+            name="PushNotification"
+            color="primary"
+          />
+        )}
+        label="Push Notification"
+      />
     </Box>
-    <Box>
-      <PrimaryButton
-        onClick={updatePageSize(PAGE_SIZE)}
-        variant="contained"
-        color="primary"
-      >
-        Default
-      </PrimaryButton>
-      <PrimaryButton
-        onClick={updatePageSize(null)}
-        variant="contained"
-        color="primary"
-      >
-        Expanded
-      </PrimaryButton>
-      <SelectBox
-        disableUnderline
-        value={selectedCell}
-        onChange={onTeamChange}
-      >
-        {TEAMS.map((team) => (<MenuItem value={team.value} key={team.value}>{team.label}</MenuItem>))}
-      </SelectBox>
-    </Box>
-  </Box>
-);
+  );
+};
 
 export default Filter;
