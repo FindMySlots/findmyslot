@@ -30,10 +30,3 @@ Contributions are welcome, especially for the missing features! Pull requests an
 ## License
 
 [MIT License](LICENSE)
-
-## Contributors ✨
-
-Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
-
-
-This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
