@@ -7,9 +7,9 @@ import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import Filter from '../../components/Filter';
 import useDashboard from './dashboard-hook';
 import Loader from '../../components/Loader/loader';
-import DataTable from '../../components/Table';
 import COLORS from '../../variables/colors';
 import ScrollTop from '../../components/ScrollTop';
+import DataTable from '../../components/Table';
 
 interface StyleProps {
   matches: boolean
@@ -20,13 +20,13 @@ const useStyles = makeStyles<Theme, Pick<StyleProps, 'matches'>>((theme: Theme) 
     position: (props) => (props.matches ? 'relative' : 'fixed'),
     bottom: '40px',
     width: '100%',
-    fontSize: (props) => (props.matches ? '10px' : '16px'),
+    fontSize: (props) => (props.matches ? '10px' : '12px'),
   },
   footerFeedback: {
     position: (props) => (props.matches ? 'relative' : 'fixed'),
     bottom: (props) => (props.matches ? '10px' : '15px'),
     width: '100%',
-    fontSize: (props) => (props.matches ? '10px' : '16px'),
+    fontSize: (props) => (props.matches ? '10px' : '12px'),
   },
   link: {
     marginLeft: theme.spacing(1),

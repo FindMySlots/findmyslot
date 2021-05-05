@@ -31,6 +31,24 @@ const useStyles = makeStyles<Theme, Pick<StyleProps, 'matches'>>((_: Theme) => c
   tableCell: {
     padding: (props) => (props.matches ? '2px' : 'auto'),
   },
+  name: {
+    width: '20%',
+  },
+  address: {
+    width: '30%',
+  },
+  pinCode: {
+    width: '10%',
+  },
+  fees: {
+    width: '10%',
+  },
+  session: {
+    width: '20%',
+  },
+  notificationCell: {
+    width: '10%',
+  },
 }));
 
 const DataTable = ({
@@ -65,20 +83,22 @@ const DataTable = ({
   }, 0);
 
   return (
-    <TableRow key={slot.center_id}>
-      <TableCell className={classes.tableCell}>
+    <TableRow>
+      <TableCell className={classes.name}>
         {slot.name}
       </TableCell>
-      <TableCell className={classes.tableCell}>
-        <Typography>
-          {slot.address}
-        </Typography>
-        <Typography>
-          {slot.pincode}
-        </Typography>
+      <TableCell className={classes.address}>
+        {slot.address}
+      </TableCell>
+      <TableCell className={classes.pinCode}>
+        {slot.pincode}
+      </TableCell>
+      <TableCell className={classes.fees}>
+        {slot.fee_type}
       </TableCell>
       <TableCell className={clsx(
         classes.tableCell,
+        classes.session,
         [
           getTotalSlots() > 0 ? classes.green : classes.red,
         ],
@@ -90,7 +110,7 @@ const DataTable = ({
           </Typography>
         ))}
       </TableCell>
-      <TableCell className={classes.tableCell} align={matches ? 'center' : 'inherit'}>
+      <TableCell className={clsx(classes.notificationCell, classes.tableCell)} align="center">
         <Checkbox
           checked={isChecked(slot.center_id)}
           onChange={() => handleChange(slot.center_id)}

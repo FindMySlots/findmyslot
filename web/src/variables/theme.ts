@@ -4,7 +4,7 @@ import COLORS from './colors';
 
 export const typography = {
   fontFamily:
-        '-apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif',
+      'Comfortaa, Fira Mono, -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif',
   fontWeightRegular: 400,
   fontWeightMedium: 500,
   fontWeightSemiBold: 600,
@@ -12,6 +12,11 @@ export const typography = {
   fontSize: 13,
   color: COLORS.skyBlue,
 };
+
+export const zIndex9 = 9;
+export const zIndex99 = 99;
+export const zIndex999 = 999;
+export const zIndex9999 = 9999;
 
 const overrides = {
   MuiTable: {

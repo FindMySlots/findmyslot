@@ -47,16 +47,36 @@ const useStyles = makeStyles<Theme, Pick<StyleProps, 'matches'>>((theme: Theme) 
     width: '16px',
     marginLeft: theme.spacing(2),
   },
+  checkbox: {
+    paddingTop: 0,
+    paddingBottom: 0,
+  },
   tableCell: {
     padding: '4px 0',
     verticalAlign: 'middle',
-    fontSize: (props) => (props.matches ? '12px' : '16px'),
+    fontSize: (props) => (props.matches ? '10px' : '14px'),
   },
   table: {
-    minWidth: 340,
+    minWidth: 1000,
   },
   notificationCell: {
     whiteSpace: 'nowrap',
+    width: '10%',
+  },
+  name: {
+    width: '20%',
+  },
+  address: {
+    width: '30%',
+  },
+  pinCode: {
+    width: '10%',
+  },
+  fees: {
+    width: '10%',
+  },
+  session: {
+    width: '20%',
   },
   tableHead: {
     position: 'sticky',
@@ -90,14 +110,20 @@ const DataTable = ({
       <Table stickyHeader className={classes.table}>
         <TableHead className={classes.tableHead}>
           <TableRow>
-            <TableCell className={classes.tableCell}>
+            <TableCell className={clsx(classes.tableCell, classes.name)}>
               Center Name
             </TableCell>
-            <TableCell className={classes.tableCell}>
+            <TableCell className={clsx(classes.tableCell, classes.address)}>
               Address
             </TableCell>
-            <TableCell className={classes.tableCell}>
-              Sessions
+            <TableCell className={clsx(classes.tableCell, classes.pinCode)}>
+              Pin Code
+            </TableCell>
+            <TableCell className={clsx(classes.tableCell, classes.fees)}>
+              Fee Type
+            </TableCell>
+            <TableCell className={clsx(classes.tableCell, classes.session)} align="center">
+              Session(s)
             </TableCell>
             <TableCell className={clsx(classes.tableCell, classes.notificationCell)}>
               <Checkbox
@@ -105,6 +131,7 @@ const DataTable = ({
                 name="notification"
                 color="primary"
                 onChange={onNotificationChange}
+                className={classes.checkbox}
               />
               {
                 matches ? 'NOTIF' : 'Notification'
