@@ -1,9 +1,21 @@
 import React from 'react';
-import { Box } from '@material-ui/core';
+import { Box, Link, Typography } from '@material-ui/core';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import Filter from '../../components/Filter';
 import useDashboard from './dashboard-hook';
 import Loader from '../../components/Loader/loader';
 import DataTable from '../../components/Table';
+
+const useStyles = makeStyles((theme: Theme) => createStyles({
+  footer: {
+    position: 'fixed',
+    bottom: '20px',
+    width: '100%',
+  },
+  link: {
+    marginLeft: theme.spacing(1),
+  },
+}));
 
 const Dashboard = () => {
   const {
@@ -26,6 +38,7 @@ const Dashboard = () => {
     ageGroup,
     setAgeGroup,
   } = useDashboard();
+  const classes = useStyles();
   return (
     <Box width="100%">
       <Filter
@@ -49,6 +62,14 @@ const Dashboard = () => {
         stopNotifications={stopNotifications}
         setStopNotifications={setStopNotifications}
       />
+      <Typography align="center" className={classes.footer}>
+        Handcrafted with
+        {' '}
+        <span style={{ color: '#ea4e4e' }}>&#9829;</span>
+        {' '}
+        by
+        <Link className={classes.link} href="https://github.com/mehulcse">Mehul Thakkar</Link>
+      </Typography>
       <Loader open={loading} />
     </Box>
   );
