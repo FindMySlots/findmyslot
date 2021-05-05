@@ -20,6 +20,8 @@ We are using Co-Win's [Public APIs](https://apisetu.gov.in/public/marketplace/ap
 
 - [X] District Based Calendar
 - [ ] Pin code Based search
+- [ ] UX Review & Style enhancement
+- [ ] Chrome Extension
 
 ## Credit
 - Thanks to fantastic folks working at [Co-Win](https://www.cowin.gov.in/home) to support world's largest vaccination drive.
