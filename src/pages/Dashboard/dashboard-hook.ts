@@ -72,6 +72,7 @@ const useDashboard = () => {
 
   useEffect(() => {
     focusManager.setFocused(true);
+    navigator.serviceWorker.register('sw.js');
     if (Notification && Notification.permission !== 'granted') {
       Notification.requestPermission();
     }

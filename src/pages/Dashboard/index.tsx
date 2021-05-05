@@ -67,7 +67,8 @@ const Dashboard = () => {
         {' '}
         <Link className={classes.linkClass} href="https://selfregistration.cowin.gov.in/">Co-Win</Link>
         {' '}
-        Portal. This website does not collect your data.
+        Portal. This website does not collect your data. Best used in desktop/laptop browsers.
+        For mobile users, mobile should be on and may not get push notification.
       </Typography>
       <Filter
         refetchInterval={refetchInterval}
@@ -100,7 +101,7 @@ const Dashboard = () => {
         <Link className={classes.link} href="https://github.com/mehulcse">Mehul</Link>
         {' '}
         ,
-        <Link className={classes.link} href="https://github.com/jjmanglani01">Jitesh</Link>
+        <Link className={classes.link} href="https://www.linkedin.com/in/jitesh-manglani-full-stack">Jitesh</Link>
         {' '}
         ,
         <Link className={classes.link} href="https://github.com/Durgaprasad-Budhwani">Durgaprasad</Link>
