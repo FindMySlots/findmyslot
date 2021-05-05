@@ -71,11 +71,10 @@ const useDashboard = () => {
 
   useEffect(() => {
     focusManager.setFocused(true);
+    if (Notification && Notification.permission !== 'granted') {
+      Notification.requestPermission();
+    }
   }, []);
-
-  if (enableNotification && Notification && Notification.permission !== 'granted') {
-    Notification.requestPermission();
-  }
 
   return {
     stopNotifications,

@@ -1,6 +1,6 @@
 To start the project, will need to do
 
-Demo: http://bookmyslot.s3-website-us-east-1.amazonaws.com/
+Demo: https://d1mtd06aa2wbpa.cloudfront.net/
 
 ```
 yarn install
