@@ -17,6 +17,7 @@ interface Props {
   slotsList: any[],
   stopNotifications: any[],
   setStopNotifications: Function,
+  ageGroup: number,
 }
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
@@ -34,6 +35,7 @@ const DataTable = ({
   slotsList,
   stopNotifications = [],
   setStopNotifications,
+  ageGroup,
 } : Props) => {
   const classes = useStyles();
 
@@ -88,7 +90,7 @@ const DataTable = ({
                 </Typography>
               </TableCell>
               <TableCell>
-                {slot.sessions?.map((session: any) => (
+                {slot.sessions?.filter((session: any) => session.min_age_limit === ageGroup).map((session: any) => (
                   <Typography key={session.session_id}>
                     {`${session.date} - ${session.available_capacity} doses - ${session.vaccine}`}
                   </Typography>

@@ -42,9 +42,12 @@ const useDashboard = () => {
     [END_POINTS.Calendar.key, selectedState, selectedDistrict, ageGroup],
     async () => {
       const res = await axios.get(`${END_POINTS.Calendar.url}${selectedDistrict}&date=${date.current}`);
+      const targetSlot = res.data?.centers?.filter((center: any) => center.sessions.find((session: any) => session.min_age_limit === (ageGroup || 18)));
       const available = res.data?.centers?.filter((center: any) => center.sessions.find((session: any) => session.min_age_limit === (ageGroup || 18) && session.available_capacity > 0));
       // @ts-ignore
       const availableForNotification = available.filter((center: any) => stopNotifications.indexOf(center.center_id.toString()) === -1);
+      console.log(available);
+      console.log(availableForNotification);
       if (availableForNotification?.length > 0) {
         if (enableVoiceNotification) {
           speak({ text: 'The Vaccine is available. Hurry!' });
@@ -60,7 +63,7 @@ const useDashboard = () => {
           };
         }
       }
-      return available;
+      return targetSlot;
     },
     {
       // Refetch the data every second

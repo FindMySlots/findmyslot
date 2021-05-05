@@ -90,6 +90,7 @@ const Dashboard = () => {
         slotsList={slotsList}
         stopNotifications={stopNotifications}
         setStopNotifications={setStopNotifications}
+        ageGroup={ageGroup}
       />
       <Typography align="center" className={classes.footer}>
         Handcrafted with
