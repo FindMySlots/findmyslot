@@ -84,7 +84,7 @@ const Dashboard = () => {
         <Link className={classes.link} href="https://github.com/mehulcse">Mehul Thakkar</Link>
         {' '}
         &
-        <Link className={classes.link} href="https://github.com/jiteshmanglani">Jitesh Manglani</Link>
+        <Link className={classes.link} href="https://github.com/jjmanglani01">Jitesh Manglani</Link>
       </Typography>
       <Loader open={loading} />
     </Box>
