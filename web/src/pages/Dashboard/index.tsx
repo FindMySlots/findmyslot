@@ -17,13 +17,13 @@ const useStyles = makeStyles<Theme, Pick<StyleProps, 'matches'>>((theme: Theme) 
     position: 'fixed',
     bottom: '40px',
     width: '100%',
-    fontSize: (props) => (props.matches ? '10px' : '16px'),
+    fontSize: (props) => (props.matches ? '8px' : '12px'),
   },
   footerFeedback: {
     position: 'fixed',
     bottom: (props) => (props.matches ? '10px' : '15px'),
     width: '100%',
-    fontSize: (props) => (props.matches ? '10px' : '16px'),
+    fontSize: (props) => (props.matches ? '8px' : '12px'),
   },
   link: {
     marginLeft: theme.spacing(1),

@@ -22,6 +22,15 @@ const useStyles = makeStyles(() => createStyles({
   green: {
     backgroundColor: COLORS.emeraldOverlay,
   },
+  row: {
+    display: 'grid',
+    gridTemplateColumns: '2fr 3fr 1fr 1fr 2fr 1fr',
+  },
+  notificationCell: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 }));
 
 const DataTable = ({
@@ -55,17 +64,18 @@ const DataTable = ({
   }, 0);
 
   return (
-    <TableRow key={slot.center_id}>
+    <TableRow className={classes.row}>
       <TableCell>
         {slot.name}
       </TableCell>
       <TableCell>
-        <Typography>
-          {slot.address}
-        </Typography>
-        <Typography>
-          {slot.pincode}
-        </Typography>
+        {slot.address}
+      </TableCell>
+      <TableCell>
+        {slot.pincode}
+      </TableCell>
+      <TableCell>
+        {slot.fee_type}
       </TableCell>
       <TableCell className={getTotalSlots() > 0 ? classes.green : classes.red}>
         {slot.sessions?.filter((session: any) => session.min_age_limit === ageGroup).map((session: any) => (
@@ -74,7 +84,7 @@ const DataTable = ({
           </Typography>
         ))}
       </TableCell>
-      <TableCell>
+      <TableCell className={classes.notificationCell}>
         <Checkbox
           checked={isChecked(slot.center_id)}
           onChange={() => handleChange(slot.center_id)}

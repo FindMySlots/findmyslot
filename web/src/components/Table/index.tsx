@@ -14,6 +14,7 @@ import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import Row from './Row';
+import { zIndex99 } from '../../variables/theme';
 
 interface Props {
   slotsList: any[],
@@ -42,15 +43,22 @@ const useStyles = makeStyles<Theme, Pick<StyleProps, 'matches'>>((theme: Theme) 
     marginLeft: theme.spacing(2),
   },
   tableCell: {
-    paddingRight: 4,
-    paddingLeft: 5,
-    fontSize: (props) => (props.matches ? '12px' : '16px'),
+    fontSize: (props) => (props.matches ? '10px' : '14px'),
+    display: 'flex',
+    alignItems: 'center',
   },
   table: {
-    minWidth: 340,
+    minWidth: 1000,
   },
   notificationCell: {
     whiteSpace: 'nowrap',
+  },
+  row: {
+    display: 'grid',
+    gridTemplateColumns: '2fr 3fr 1fr 1fr 2fr 1fr',
+    position: 'sticky',
+    top: 0,
+    zIndex: zIndex99,
   },
 }));
 
@@ -78,7 +86,7 @@ const DataTable = ({
     <TableContainer className={classes.container}>
       <Table stickyHeader className={classes.table}>
         <TableHead>
-          <TableRow>
+          <TableRow className={classes.row}>
             <TableCell className={classes.tableCell}>
               Center Name
             </TableCell>
@@ -86,7 +94,13 @@ const DataTable = ({
               Address
             </TableCell>
             <TableCell className={classes.tableCell}>
-              Sessions
+              Pin Code
+            </TableCell>
+            <TableCell className={classes.tableCell}>
+              Fee Type
+            </TableCell>
+            <TableCell className={classes.tableCell} align="center">
+              Session(s)
             </TableCell>
             <TableCell className={clsx(classes.tableCell, classes.notificationCell)}>
               <Checkbox
