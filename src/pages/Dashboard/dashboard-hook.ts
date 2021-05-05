@@ -13,8 +13,8 @@ const useDashboard = () => {
   const [selectedState, setSelectedState] = useQueryParam('state', withDefault(NumberParam, 0));
   const [selectedDistrict, setSelectedDistrict] = useQueryParam('district', withDefault(NumberParam, 0));
   const [refetchInterval, setRefetchInterval] = useQueryParam('interval', withDefault(NumberParam, 1));
-  const [enableVoiceNotification, setEnableVoiceNotification] = useQueryParam('voice', withDefault(BooleanParam, false));
-  const [enableNotification, setEnableNotification] = useQueryParam('notification', withDefault(BooleanParam, false));
+  const [enableVoiceNotification, setEnableVoiceNotification] = useQueryParam('voice', withDefault(BooleanParam, true));
+  const [enableNotification, setEnableNotification] = useQueryParam('notification', withDefault(BooleanParam, true));
   const [stopNotifications, setStopNotifications] = useQueryParam('stopNotifications', withDefault(ArrayParam, []));
   const [ageGroup, setAgeGroup] = useQueryParam('age', withDefault(NumberParam, 18));
   const { speak } = useSpeechSynthesis({});
