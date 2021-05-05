@@ -62,7 +62,7 @@ const Dashboard = () => {
   return (
     <Box width="100%">
       <Typography className={classes.topLabel}>
-        Keep this page open in browser, enable the Voice and Push Notification. Whenever the slot is available you&#39;ll receive the notification.
+        Keep this page open in browser, enable the Voice and Push Notification. Whenever the slot is available within next 7 days you&#39;ll receive the notification.
         Click on push notification should take you to the
         {' '}
         <Link className={classes.linkClass} href="https://selfregistration.cowin.gov.in/">Co-Win</Link>
