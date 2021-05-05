@@ -39,21 +39,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <!-- markdownlint-disable -->
 <table>
   <tr>
-    <td align="center"><a href="https://github.com/mehulcse"><img src="https://avatars.githubusercontent.com/u/7822793?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Mehul Thakkar</b></sub></a><br /><a href="https://github.com/mehulcse/findmyslot/commits?author=mehulcse" title="Documentation">📖</a></td>
-  </tr>
-</table>
-
-<!-- markdownlint-restore -->
-<!-- prettier-ignore-end -->
-
-<!-- ALL-CONTRIBUTORS-LIST:END -->
-
-<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
-<!-- prettier-ignore-start -->
-<!-- markdownlint-disable -->
-<table>
-  <tr>
-    <td align="center"><a href="https://github.com/mehulcse"><img src="https://avatars.githubusercontent.com/u/7822793?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Mehul Thakkar</b></sub></a><br /><a href="https://github.com/Mehul Thakkar/CowinNotification/commits?author=mehulcse" title="Documentation">📖</a></td>
+    <td align="center"><a href="https://github.com/mehulcse"><img src="https://avatars.githubusercontent.com/u/7822793?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Mehul Thakkar</b></sub></a><br /><a href="https://github.com/mehulcse/findmyslot/commits?author=mehulcse" title="Documentation">📖</a> <a href="https://github.com/mehulcse/findmyslot/commits?author=mehulcse" title="Code">💻</a></td>
   </tr>
 </table>
 
