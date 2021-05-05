@@ -10,7 +10,12 @@ import COLORS from '../../variables/colors';
 const useStyles = makeStyles((theme: Theme) => createStyles({
   footer: {
     position: 'fixed',
-    bottom: '20px',
+    bottom: '40px',
+    width: '100%',
+  },
+  footerFeedback: {
+    position: 'fixed',
+    bottom: '15px',
     width: '100%',
   },
   link: {
@@ -96,6 +101,15 @@ const Dashboard = () => {
         {' '}
         &
         <Link className={classes.link} href="https://github.com/jjmanglani01">Jitesh Manglani</Link>
+      </Typography>
+      <Typography align="center" className={classes.footerFeedback}>
+        Please report the issues
+        {' '}
+        <Link className={classes.link} href="https://github.com/mehulcse/findmyslot/issues">here</Link>
+        {' '}
+        or send an email to
+        {' '}
+        <Link href="mailto:mehulthakkar02@gmail.com">mehulthakkar02@gmail.com</Link>
       </Typography>
       <Loader open={loading} />
     </Box>
