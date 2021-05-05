@@ -4,8 +4,10 @@ import {
   TableCell,
   Typography,
   Checkbox,
+  useMediaQuery,
 } from '@material-ui/core';
-import { createStyles, makeStyles } from '@material-ui/core/styles';
+import clsx from 'clsx';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import COLORS from '../../variables/colors';
 
 interface Props {
@@ -15,12 +17,19 @@ interface Props {
   ageGroup: number,
 }
 
-const useStyles = makeStyles(() => createStyles({
+interface StyleProps {
+  matches: boolean
+}
+
+const useStyles = makeStyles<Theme, Pick<StyleProps, 'matches'>>((_: Theme) => createStyles({
   red: {
     backgroundColor: COLORS.carnationOverlay,
   },
   green: {
     backgroundColor: COLORS.emeraldOverlay,
+  },
+  tableCell: {
+    padding: (props) => (props.matches ? '2px' : 'auto'),
   },
 }));
 
@@ -29,8 +38,9 @@ const DataTable = ({
   setStopNotifications,
   ageGroup,
   slot,
-} : Props) => {
-  const classes = useStyles();
+}: Props) => {
+  const matches = useMediaQuery('(max-width:768px)');
+  const classes = useStyles({ matches });
 
   const isChecked = (centerID: number) => stopNotifications.indexOf(centerID.toString()) === -1;
 
@@ -56,10 +66,10 @@ const DataTable = ({
 
   return (
     <TableRow key={slot.center_id}>
-      <TableCell>
+      <TableCell className={classes.tableCell}>
         {slot.name}
       </TableCell>
-      <TableCell>
+      <TableCell className={classes.tableCell}>
         <Typography>
           {slot.address}
         </Typography>
@@ -67,14 +77,20 @@ const DataTable = ({
           {slot.pincode}
         </Typography>
       </TableCell>
-      <TableCell className={getTotalSlots() > 0 ? classes.green : classes.red}>
+      <TableCell className={clsx(
+        classes.tableCell,
+        [
+          getTotalSlots() > 0 ? classes.green : classes.red,
+        ],
+      )}
+      >
         {slot.sessions?.filter((session: any) => session.min_age_limit === ageGroup).map((session: any) => (
           <Typography key={session.session_id}>
             {`${session.date} - ${session.available_capacity} doses - ${session.vaccine}`}
           </Typography>
         ))}
       </TableCell>
-      <TableCell>
+      <TableCell className={classes.tableCell} align={matches ? 'center' : 'inherit'}>
         <Checkbox
           checked={isChecked(slot.center_id)}
           onChange={() => handleChange(slot.center_id)}

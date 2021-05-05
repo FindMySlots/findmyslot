@@ -27,23 +27,29 @@ interface StyleProps {
 }
 
 const useStyles = makeStyles<Theme, Pick<StyleProps, 'matches'>>((theme: Theme) => createStyles({
-  container: {
-    height: (props) => (props.matches ? 'calc(100vh - 300px)' : 'calc(100vh - 200px)'),
+  container: (props) => ({
     overflowX: 'auto',
     marginRight: 'auto',
     marginLeft: 'auto',
     marginTop: '50',
     padding: '10',
     margin: '10',
-  },
+    ...props.matches ? {
+      // To let nested sticky elements work as expected.
+      height: '100%',
+      display: 'initial',
+    } : {
+      height: 'calc(100vh - 200px)',
+    },
+  }),
   icon: {
     height: '16px',
     width: '16px',
     marginLeft: theme.spacing(2),
   },
   tableCell: {
-    paddingRight: 4,
-    paddingLeft: 5,
+    padding: '4px 0',
+    verticalAlign: 'middle',
     fontSize: (props) => (props.matches ? '12px' : '16px'),
   },
   table: {
@@ -52,6 +58,11 @@ const useStyles = makeStyles<Theme, Pick<StyleProps, 'matches'>>((theme: Theme) 
   notificationCell: {
     whiteSpace: 'nowrap',
   },
+  tableHead: {
+    position: 'sticky',
+    top: 0,
+    zIndex: 1,
+  },
 }));
 
 const DataTable = ({
@@ -59,7 +70,7 @@ const DataTable = ({
   stopNotifications = [],
   setStopNotifications,
   ageGroup,
-} : Props) => {
+}: Props) => {
   const matches = useMediaQuery('(max-width:768px)');
   const classes = useStyles({ matches });
 
@@ -77,7 +88,7 @@ const DataTable = ({
   return (
     <TableContainer className={classes.container}>
       <Table stickyHeader className={classes.table}>
-        <TableHead>
+        <TableHead className={classes.tableHead}>
           <TableRow>
             <TableCell className={classes.tableCell}>
               Center Name
@@ -95,8 +106,10 @@ const DataTable = ({
                 color="primary"
                 onChange={onNotificationChange}
               />
-              Notification
-              <Tooltip title="Uncheck this if you wish to stop notification for individual centers" aria-label="Preview">
+              {
+                matches ? 'NOTIF' : 'Notification'
+              }
+              <Tooltip title={`${matches ? 'Notification:' : ''}Uncheck this if you wish to stop notification for individual centers`} aria-label="Preview">
                 <HelpOutlineIcon className={classes.icon} />
               </Tooltip>
             </TableCell>

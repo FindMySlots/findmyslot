@@ -14,13 +14,13 @@ interface StyleProps {
 
 const useStyles = makeStyles<Theme, Pick<StyleProps, 'matches'>>((theme: Theme) => createStyles({
   footer: {
-    position: 'fixed',
+    position: (props) => (props.matches ? 'relative' : 'fixed'),
     bottom: '40px',
     width: '100%',
     fontSize: (props) => (props.matches ? '10px' : '16px'),
   },
   footerFeedback: {
-    position: 'fixed',
+    position: (props) => (props.matches ? 'relative' : 'fixed'),
     bottom: (props) => (props.matches ? '10px' : '15px'),
     width: '100%',
     fontSize: (props) => (props.matches ? '10px' : '16px'),
