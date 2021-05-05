@@ -9,7 +9,10 @@ import {
   useMediaQuery,
 } from '@material-ui/core';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import { DatePicker } from '@material-ui/pickers';
+import { format } from 'util';
 import times from 'lodash.times';
+import { MaterialUiPickersDate } from '@material-ui/pickers/typings/date';
 import SelectBox from '../Select';
 import { District, State } from '../../variables/types';
 import COLORS from '../../variables/colors';
@@ -29,6 +32,8 @@ interface Props {
   setEnableNotification: Function,
   ageGroup: number | string,
   setAgeGroup: Function,
+  date: string
+  setDate: Function,
 }
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
@@ -62,6 +67,8 @@ const Filter = ({
   setEnableNotification,
   ageGroup,
   setAgeGroup,
+  date,
+  setDate,
 } : Props) => {
   const classes = useStyles();
   const matches = useMediaQuery('(max-width:768px)');
@@ -88,6 +95,10 @@ const Filter = ({
 
   const handleAgeGroupChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     setAgeGroup(event.target.value);
+  };
+
+  const handleDateChange = (newDate: MaterialUiPickersDate) => {
+    setDate(format(newDate, 'dd-MM-yyyy'));
   };
 
   return (
@@ -152,6 +163,13 @@ const Filter = ({
             <MenuItem value={time + 1} key={time + 1}>{`${time + 1} Minute(s)`}</MenuItem>
           ))}
         </SelectBox>
+      </FormControl>
+      <FormControl className={classes.formControl}>
+        <InputLabel id="startDate" className={classes.label}>Start Date</InputLabel>
+        <DatePicker
+          value={date}
+          onChange={handleDateChange}
+        />
       </FormControl>
       <FormControlLabel
         control={(

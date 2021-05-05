@@ -57,6 +57,8 @@ const Dashboard = () => {
     setStopNotifications,
     ageGroup,
     setAgeGroup,
+    date,
+    setDate,
   } = useDashboard();
   const classes = useStyles();
   return (
@@ -84,6 +86,8 @@ const Dashboard = () => {
         setEnableNotification={setEnableNotification}
         ageGroup={ageGroup}
         setAgeGroup={setAgeGroup}
+        date={date}
+        setDate={setDate}
       />
       <DataTable
         slotsList={slotsList}

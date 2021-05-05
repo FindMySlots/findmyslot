@@ -1,5 +1,5 @@
-import { useEffect, useRef } from 'react';
-import { NumberParam, useQueryParam, withDefault, BooleanParam, ArrayParam } from 'use-query-params';
+import { useEffect } from 'react';
+import { NumberParam, useQueryParam, withDefault, BooleanParam, ArrayParam, StringParam } from 'use-query-params';
 import axios from 'axios';
 import {
   useQuery,
@@ -16,9 +16,9 @@ const useDashboard = () => {
   const [enableVoiceNotification, setEnableVoiceNotification] = useQueryParam('voice', withDefault(BooleanParam, true));
   const [enableNotification, setEnableNotification] = useQueryParam('notification', withDefault(BooleanParam, true));
   const [stopNotifications, setStopNotifications] = useQueryParam('stopNotifications', withDefault(ArrayParam, []));
+  const [date, setDate] = useQueryParam('district', withDefault(StringParam, format(new Date(), 'dd-MM-yyyy')));
   const [ageGroup, setAgeGroup] = useQueryParam('age', withDefault(NumberParam, 18));
   const { speak } = useSpeechSynthesis({});
-  const date = useRef(format(new Date(), 'dd-MM-yyyy'));
   const { data: statesList, isFetching: loadingStates } = useQuery(
     END_POINTS.State.key,
     async () => {
@@ -41,7 +41,7 @@ const useDashboard = () => {
   const { data: slotsList, isFetching: loadingSlots } = useQuery(
     [END_POINTS.Calendar.key, selectedState, selectedDistrict, ageGroup],
     async () => {
-      const res = await axios.get(`${END_POINTS.Calendar.url}${selectedDistrict}&date=${date.current}`);
+      const res = await axios.get(`${END_POINTS.Calendar.url}${selectedDistrict}&date=${date}`);
       const targetSlot = res.data?.centers?.filter((center: any) => center.sessions.find((session: any) => session.min_age_limit === (ageGroup || 18)));
       const available = res.data?.centers?.filter((center: any) => center.sessions.find((session: any) => session.min_age_limit === (ageGroup || 18) && session.available_capacity > 0));
       // @ts-ignore
@@ -96,6 +96,8 @@ const useDashboard = () => {
     slotsList,
     ageGroup,
     setAgeGroup,
+    date,
+    setDate,
   };
 };
 
