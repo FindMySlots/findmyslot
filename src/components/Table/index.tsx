@@ -21,13 +21,26 @@ interface Props {
 }
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
-  tableContainer: {
-    maxHeight: '80vh',
+  container: {
+    height: 'calc(100vh - 300px)',
+    overflowX: 'auto',
+    marginRight: 'auto',
+    marginLeft: 'auto',
+    marginTop: '50',
+    padding: '10',
+    margin: '10',
   },
   icon: {
     height: '16px',
     width: '16px',
     marginLeft: theme.spacing(2),
+  },
+  tableCell: {
+    paddingRight: 4,
+    paddingLeft: 5,
+  },
+  table: {
+    minWidth: 340,
   },
 }));
 
@@ -51,20 +64,20 @@ const DataTable = ({
   };
 
   return (
-    <TableContainer className={classes.tableContainer}>
-      <Table stickyHeader>
+    <TableContainer className={classes.container}>
+      <Table stickyHeader className={classes.table}>
         <TableHead>
           <TableRow>
-            <TableCell>
+            <TableCell className={classes.tableCell}>
               Center Name
             </TableCell>
-            <TableCell>
+            <TableCell className={classes.tableCell}>
               Address
             </TableCell>
-            <TableCell>
+            <TableCell className={classes.tableCell}>
               Sessions
             </TableCell>
-            <TableCell>
+            <TableCell className={classes.tableCell}>
               <Checkbox
                 checked={notifyAll}
                 name="notification"
