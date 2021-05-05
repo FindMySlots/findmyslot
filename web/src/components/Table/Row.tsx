@@ -5,6 +5,7 @@ import {
   Typography,
   Checkbox,
 } from '@material-ui/core';
+import clsx from 'clsx';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
 import COLORS from '../../variables/colors';
 
@@ -22,14 +23,23 @@ const useStyles = makeStyles(() => createStyles({
   green: {
     backgroundColor: COLORS.emeraldOverlay,
   },
-  row: {
-    display: 'grid',
-    gridTemplateColumns: '2fr 3fr 1fr 1fr 2fr 1fr',
+  name: {
+    width: '20%',
+  },
+  address: {
+    width: '30%',
+  },
+  pinCode: {
+    width: '10%',
+  },
+  fees: {
+    width: '10%',
+  },
+  session: {
+    width: '20%',
   },
   notificationCell: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
+    width: '10%',
   },
 }));
 
@@ -64,27 +74,27 @@ const DataTable = ({
   }, 0);
 
   return (
-    <TableRow className={classes.row}>
-      <TableCell>
+    <TableRow>
+      <TableCell className={classes.name}>
         {slot.name}
       </TableCell>
-      <TableCell>
+      <TableCell className={classes.address}>
         {slot.address}
       </TableCell>
-      <TableCell>
+      <TableCell className={classes.pinCode}>
         {slot.pincode}
       </TableCell>
-      <TableCell>
+      <TableCell className={classes.fees}>
         {slot.fee_type}
       </TableCell>
-      <TableCell className={getTotalSlots() > 0 ? classes.green : classes.red}>
+      <TableCell className={clsx(classes.session, getTotalSlots() > 0 ? classes.green : classes.red)}>
         {slot.sessions?.filter((session: any) => session.min_age_limit === ageGroup).map((session: any) => (
           <Typography key={session.session_id}>
             {`${session.date} - ${session.available_capacity} doses - ${session.vaccine}`}
           </Typography>
         ))}
       </TableCell>
-      <TableCell className={classes.notificationCell}>
+      <TableCell className={clsx(classes.notificationCell)} align="center">
         <Checkbox
           checked={isChecked(slot.center_id)}
           onChange={() => handleChange(slot.center_id)}

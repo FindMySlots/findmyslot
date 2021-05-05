@@ -14,7 +14,6 @@ import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import Row from './Row';
-import { zIndex99 } from '../../variables/theme';
 
 interface Props {
   slotsList: any[],
@@ -42,23 +41,34 @@ const useStyles = makeStyles<Theme, Pick<StyleProps, 'matches'>>((theme: Theme) 
     width: '16px',
     marginLeft: theme.spacing(2),
   },
+  checkbox: {
+    paddingTop: 0,
+    paddingBottom: 0,
+  },
   tableCell: {
     fontSize: (props) => (props.matches ? '10px' : '14px'),
-    display: 'flex',
-    alignItems: 'center',
   },
   table: {
     minWidth: 1000,
   },
   notificationCell: {
     whiteSpace: 'nowrap',
+    width: '10%',
   },
-  row: {
-    display: 'grid',
-    gridTemplateColumns: '2fr 3fr 1fr 1fr 2fr 1fr',
-    position: 'sticky',
-    top: 0,
-    zIndex: zIndex99,
+  name: {
+    width: '20%',
+  },
+  address: {
+    width: '30%',
+  },
+  pinCode: {
+    width: '10%',
+  },
+  fees: {
+    width: '10%',
+  },
+  session: {
+    width: '20%',
   },
 }));
 
@@ -86,20 +96,20 @@ const DataTable = ({
     <TableContainer className={classes.container}>
       <Table stickyHeader className={classes.table}>
         <TableHead>
-          <TableRow className={classes.row}>
-            <TableCell className={classes.tableCell}>
+          <TableRow>
+            <TableCell className={clsx(classes.tableCell, classes.name)}>
               Center Name
             </TableCell>
-            <TableCell className={classes.tableCell}>
+            <TableCell className={clsx(classes.tableCell, classes.address)}>
               Address
             </TableCell>
-            <TableCell className={classes.tableCell}>
+            <TableCell className={clsx(classes.tableCell, classes.pinCode)}>
               Pin Code
             </TableCell>
-            <TableCell className={classes.tableCell}>
+            <TableCell className={clsx(classes.tableCell, classes.fees)}>
               Fee Type
             </TableCell>
-            <TableCell className={classes.tableCell} align="center">
+            <TableCell className={clsx(classes.tableCell, classes.session)} align="center">
               Session(s)
             </TableCell>
             <TableCell className={clsx(classes.tableCell, classes.notificationCell)}>
@@ -108,6 +118,7 @@ const DataTable = ({
                 name="notification"
                 color="primary"
                 onChange={onNotificationChange}
+                className={classes.checkbox}
               />
               Notification
               <Tooltip title="Uncheck this if you wish to stop notification for individual centers" aria-label="Preview">
