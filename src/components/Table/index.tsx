@@ -8,9 +8,11 @@ import {
   TableContainer,
   Checkbox,
   Tooltip,
+  useMediaQuery,
 } from '@material-ui/core';
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import clsx from 'clsx';
 import Row from './Row';
 
 interface Props {
@@ -20,9 +22,13 @@ interface Props {
   ageGroup: number,
 }
 
-const useStyles = makeStyles((theme: Theme) => createStyles({
+interface StyleProps {
+  matches: boolean
+}
+
+const useStyles = makeStyles<Theme, Pick<StyleProps, 'matches'>>((theme: Theme) => createStyles({
   container: {
-    height: 'calc(100vh - 300px)',
+    height: (props) => (props.matches ? 'calc(100vh - 300px)' : 'calc(100vh - 200px)'),
     overflowX: 'auto',
     marginRight: 'auto',
     marginLeft: 'auto',
@@ -38,9 +44,13 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
   tableCell: {
     paddingRight: 4,
     paddingLeft: 5,
+    fontSize: (props) => (props.matches ? '12px' : '16px'),
   },
   table: {
     minWidth: 340,
+  },
+  notificationCell: {
+    whiteSpace: 'nowrap',
   },
 }));
 
@@ -50,7 +60,8 @@ const DataTable = ({
   setStopNotifications,
   ageGroup,
 } : Props) => {
-  const classes = useStyles();
+  const matches = useMediaQuery('(max-width:768px)');
+  const classes = useStyles({ matches });
 
   const notifyAll = stopNotifications?.length === 0;
 
@@ -77,7 +88,7 @@ const DataTable = ({
             <TableCell className={classes.tableCell}>
               Sessions
             </TableCell>
-            <TableCell className={classes.tableCell}>
+            <TableCell className={clsx(classes.tableCell, classes.notificationCell)}>
               <Checkbox
                 checked={notifyAll}
                 name="notification"

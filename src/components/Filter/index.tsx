@@ -10,6 +10,7 @@ import {
 } from '@material-ui/core';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import times from 'lodash.times';
+import clsx from 'clsx';
 import SelectBox from '../Select';
 import { District, State } from '../../variables/types';
 import COLORS from '../../variables/colors';
@@ -31,19 +32,34 @@ interface Props {
   setAgeGroup: Function,
 }
 
-const useStyles = makeStyles((theme: Theme) => createStyles({
+interface StyleProps {
+  matches: boolean
+}
+
+const useStyles = makeStyles<Theme, Pick<StyleProps, 'matches'>>((theme: Theme) => createStyles({
   formControl: {
     margin: theme.spacing(1),
-    width: 240,
+    width: (props) => (props.matches ? 160 : 240),
     '& .MuiInputBase-root': {
       marginTop: theme.spacing(3),
     },
   },
   label: {
-    width: 280,
+    width: (props) => (props.matches ? 220 : 280),
     color: COLORS.black,
     fontSize: '18px',
     marginBottom: theme.spacing(2),
+  },
+  filterContainerDesktop: {
+    justifyContent: 'space-between',
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: '100%',
+  },
+  filterContainerMobile: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(2, 1fr)',
   },
 }));
 
@@ -63,8 +79,8 @@ const Filter = ({
   ageGroup,
   setAgeGroup,
 } : Props) => {
-  const classes = useStyles();
   const matches = useMediaQuery('(max-width:768px)');
+  const classes = useStyles({ matches });
   const handleStateChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     setSelectedState(event.target.value);
     setSelectedDistrict(0);
@@ -92,11 +108,10 @@ const Filter = ({
 
   return (
     <Box
-      justifyContent="space-between"
-      display="flex"
-      flexDirection={matches ? 'column' : 'row'}
-      alignItems="center"
-      width="100%"
+      className={clsx({
+        [classes.filterContainerDesktop]: !matches,
+        [classes.filterContainerMobile]: matches,
+      })}
     >
       <FormControl className={classes.formControl}>
         <InputLabel id="state" className={classes.label}>State</InputLabel>
@@ -106,7 +121,7 @@ const Filter = ({
           value={selectedState}
           onChange={handleStateChange}
         >
-          <MenuItem value={0} key={0} disabled>--------Select State--------</MenuItem>
+          <MenuItem value={0} key={0} disabled>----Select State----</MenuItem>
           {statesList?.map((state: State) => (
             <MenuItem value={state.state_id} key={state.state_id}>{state.state_name}</MenuItem>
           ))}
@@ -120,7 +135,7 @@ const Filter = ({
           value={selectedDistrict}
           onChange={handleDistrictChange}
         >
-          <MenuItem value={0} key={0} disabled>--------Select District--------</MenuItem>
+          <MenuItem value={0} key={0} disabled>-----Select District----</MenuItem>
           {districtsList?.map((district: District) => (
             <MenuItem value={district.district_id} key={district.district_id}>{district.district_name}</MenuItem>
           ))}
@@ -140,7 +155,7 @@ const Filter = ({
         </SelectBox>
       </FormControl>
       <FormControl className={classes.formControl}>
-        <InputLabel id="refreshTime" className={classes.label}>Refresh Time Interval (In Minutes)</InputLabel>
+        <InputLabel id="refreshTime" className={classes.label}>Refresh Time Interval</InputLabel>
         <SelectBox
           labelId="refreshTime"
           disableUnderline

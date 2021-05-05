@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Link, Typography } from '@material-ui/core';
+import { Box, Link, Typography, useMediaQuery } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import Filter from '../../components/Filter';
@@ -8,16 +8,22 @@ import Loader from '../../components/Loader/loader';
 import DataTable from '../../components/Table';
 import COLORS from '../../variables/colors';
 
-const useStyles = makeStyles((theme: Theme) => createStyles({
+interface StyleProps {
+  matches: boolean
+}
+
+const useStyles = makeStyles<Theme, Pick<StyleProps, 'matches'>>((theme: Theme) => createStyles({
   footer: {
     position: 'fixed',
     bottom: '40px',
     width: '100%',
+    fontSize: (props) => (props.matches ? '10px' : '16px'),
   },
   footerFeedback: {
     position: 'fixed',
-    bottom: '15px',
+    bottom: (props) => (props.matches ? '10px' : '15px'),
     width: '100%',
+    fontSize: (props) => (props.matches ? '10px' : '16px'),
   },
   link: {
     marginLeft: theme.spacing(1),
@@ -62,7 +68,8 @@ const Dashboard = () => {
     alert,
     setAlert,
   } = useDashboard();
-  const classes = useStyles();
+  const matches = useMediaQuery('(max-width:768px)');
+  const classes = useStyles({ matches });
   return (
     <Box width="100%">
       {alert && (
