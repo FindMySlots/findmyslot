@@ -17,6 +17,7 @@ const useDashboard = () => {
   const [enableNotification, setEnableNotification] = useQueryParam('notification', withDefault(BooleanParam, true));
   const [stopNotifications, setStopNotifications] = useQueryParam('stopNotifications', withDefault(ArrayParam, []));
   const [ageGroup, setAgeGroup] = useQueryParam('age', withDefault(NumberParam, 18));
+  const [alert, setAlert] = useQueryParam('alert', withDefault(BooleanParam, true));
   const { speak } = useSpeechSynthesis({});
   const date = useRef(format(new Date(), 'dd-MM-yyyy'));
   const { data: statesList, isFetching: loadingStates } = useQuery(
@@ -96,6 +97,8 @@ const useDashboard = () => {
     slotsList,
     ageGroup,
     setAgeGroup,
+    alert,
+    setAlert,
   };
 };
 

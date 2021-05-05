@@ -1,5 +1,6 @@
 import React from 'react';
 import { Box, Link, Typography } from '@material-ui/core';
+import Alert from '@material-ui/lab/Alert';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import Filter from '../../components/Filter';
 import useDashboard from './dashboard-hook';
@@ -29,6 +30,7 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
     fontSize: '16px',
     marginBottom: theme.spacing(1),
     padding: theme.spacing(2),
+    borderRadius: 0,
   },
   linkClass: {
     color: COLORS.violet,
@@ -57,19 +59,23 @@ const Dashboard = () => {
     setStopNotifications,
     ageGroup,
     setAgeGroup,
+    alert,
+    setAlert,
   } = useDashboard();
   const classes = useStyles();
   return (
     <Box width="100%">
-      <Typography className={classes.topLabel}>
-        Keep this page open in browser, enable the Voice and Push Notification. Whenever the slot is available within next 7 days you&#39;ll receive the notification.
-        Click on push notification should take you to the
-        {' '}
-        <Link className={classes.linkClass} href="https://selfregistration.cowin.gov.in/">Co-Win</Link>
-        {' '}
-        Portal. This website does not collect your data. Best used in desktop/laptop browsers.
-        For mobile users, mobile should be on and may not get push notification.
-      </Typography>
+      {alert && (
+        <Alert className={classes.topLabel} severity="warning" onClose={() => setAlert(false)}>
+          Keep this page open in browser, enable the Voice and Push Notification. Whenever the slot is available within next 7 days you&#39;ll receive the notification.
+          Click on push notification should take you to the
+          {' '}
+          <Link className={classes.linkClass} href="https://selfregistration.cowin.gov.in/">Co-Win</Link>
+          {' '}
+          Portal. This website does not collect your data. Best used in desktop/laptop browsers.
+          For mobile users, mobile should be on and may not get push notification.
+        </Alert>
+      )}
       <Filter
         refetchInterval={refetchInterval}
         setRefetchInterval={setRefetchInterval}
