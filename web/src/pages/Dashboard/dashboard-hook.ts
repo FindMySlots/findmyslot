@@ -12,7 +12,7 @@ import useSpeechSynthesis from '../../util/useSpeechSynthesis';
 const useDashboard = () => {
   const [selectedState, setSelectedState] = useQueryParam('state', withDefault(NumberParam, 0));
   const [selectedDistrict, setSelectedDistrict] = useQueryParam('district', withDefault(NumberParam, 0));
-  const [refetchInterval, setRefetchInterval] = useQueryParam('interval', withDefault(NumberParam, 1));
+  const [refetchInterval, setRefetchInterval] = useQueryParam('interval', withDefault(NumberParam, 60));
   const [enableVoiceNotification, setEnableVoiceNotification] = useQueryParam('voice', withDefault(BooleanParam, true));
   const [enableNotification, setEnableNotification] = useQueryParam('notification', withDefault(BooleanParam, true));
   const [stopNotifications, setStopNotifications] = useQueryParam('stopNotifications', withDefault(ArrayParam, []));
@@ -66,7 +66,7 @@ const useDashboard = () => {
     },
     {
       // Refetch the data every second
-      refetchInterval: 1000 * 60 * refetchInterval,
+      refetchInterval: 1000 * refetchInterval,
       enabled: !!selectedDistrict,
     },
   );

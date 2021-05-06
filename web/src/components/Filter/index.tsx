@@ -164,8 +164,11 @@ const Filter = ({
           onChange={handleRefetchChange}
         >
           <MenuItem value={0} key={0} disabled>-----Refresh Time Interval-----</MenuItem>
+          <MenuItem value={15} key={1}>15 Second(s)</MenuItem>
+          <MenuItem value={30} key={2}>30 Second(s)</MenuItem>
+          <MenuItem value={45} key={3}>45 Second(s)</MenuItem>
           {times(30, (time: number) => (
-            <MenuItem value={time + 1} key={time + 1}>{`${time + 1} Minute(s)`}</MenuItem>
+            <MenuItem value={(time + 1) * 60} key={time + 4}>{`${time + 1} Minute(s)`}</MenuItem>
           ))}
         </SelectBox>
       </FormControl>
