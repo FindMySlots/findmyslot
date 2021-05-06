@@ -115,11 +115,11 @@ const useDashboard = () => {
     ],
   );
 
-  const slotsListByPin: any[] = [];
+  let slotsListByPin: any[] = [];
   let loadingPin = false;
   const { length } = results;
   for (let i = 0; i < length; i += 1) {
-    slotsListByPin.concat(results[i]?.data ?? []);
+    slotsListByPin = slotsListByPin.concat(results[i]?.data ?? []);
     loadingPin = loadingPin || !!results[i]?.isFetching;
   }
 
