@@ -57,14 +57,14 @@ const useStyles = makeStyles<Theme, Pick<StyleProps, 'matches'>>((theme: Theme) 
     fontSize: (props) => (props.matches ? '10px' : '14px'),
   },
   table: {
-    minWidth: 1000,
+    minWidth: 400,
   },
   notificationCell: {
     whiteSpace: 'nowrap',
     width: '10%',
   },
   name: {
-    width: '20%',
+    width: (props) => (props.matches ? '30%' : '20%'),
   },
   address: {
     width: '30%',
@@ -76,7 +76,7 @@ const useStyles = makeStyles<Theme, Pick<StyleProps, 'matches'>>((theme: Theme) 
     width: '10%',
   },
   session: {
-    width: '20%',
+    width: (props) => (props.matches ? '30%' : '20%'),
   },
   tableHead: {
     position: 'sticky',
@@ -113,18 +113,27 @@ const DataTable = ({
             <TableCell className={clsx(classes.tableCell, classes.name)}>
               Center Name
             </TableCell>
+            {matches && (
+              <TableCell className={clsx(classes.tableCell, classes.session)} align="center">
+                Session(s)
+              </TableCell>
+            )}
             <TableCell className={clsx(classes.tableCell, classes.address)}>
               Address
             </TableCell>
-            <TableCell className={clsx(classes.tableCell, classes.pinCode)}>
-              Pin Code
-            </TableCell>
-            <TableCell className={clsx(classes.tableCell, classes.fees)}>
-              Fee Type
-            </TableCell>
-            <TableCell className={clsx(classes.tableCell, classes.session)} align="center">
-              Session(s)
-            </TableCell>
+            {!matches && (
+              <>
+                <TableCell className={clsx(classes.tableCell, classes.pinCode)}>
+                  Pin Code
+                </TableCell>
+                <TableCell className={clsx(classes.tableCell, classes.fees)}>
+                  Fee Type
+                </TableCell>
+                <TableCell className={clsx(classes.tableCell, classes.session)} align="center">
+                  Session(s)
+                </TableCell>
+              </>
+            )}
             <TableCell className={clsx(classes.tableCell, classes.notificationCell)}>
               <Checkbox
                 checked={notifyAll}
@@ -133,9 +142,7 @@ const DataTable = ({
                 onChange={onNotificationChange}
                 className={classes.checkbox}
               />
-              {
-                matches ? 'NOTIF' : 'Notification'
-              }
+              Notification
               <Tooltip
                 title={
                   `${matches ? 'Notification:' : ''}

@@ -114,16 +114,19 @@ const Dashboard = () => {
         <span style={{ color: '#ea4e4e' }}>&#9829;</span>
         {' '}
         by
-        <Link className={classes.link} href="https://github.com/mehulcse">Mehul</Link>
+        <Link className={classes.link} href="https://www.linkedin.com/in/mehulcse">Mehul</Link>
         {' '}
         ,
         <Link className={classes.link} href="https://www.linkedin.com/in/jitesh-manglani-full-stack">Jitesh</Link>
         {' '}
         ,
-        <Link className={classes.link} href="https://github.com/Durgaprasad-Budhwani">Durgaprasad</Link>
+        <Link className={classes.link} href="https://www.linkedin.com/in/durgaprasad-budhwani">Durgaprasad</Link>
+        {' '}
+        ,
+        <Link className={classes.link} href="https://www.linkedin.com/in/nitishkalra-uiaspects">Nitish</Link>
         {' '}
         &
-        <Link className={classes.link} href="https://github.com/nitish-kalra-9">Nitish</Link>
+        <Link className={classes.link} href="https://www.linkedin.com/in/abhishek-thorat-143aa2bb">Abhishek</Link>
       </Typography>
       <Typography align="center" className={classes.footerFeedback}>
         Please report the issues/suggestions

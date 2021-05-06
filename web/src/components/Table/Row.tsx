@@ -32,7 +32,7 @@ const useStyles = makeStyles<Theme, Pick<StyleProps, 'matches'>>((_: Theme) => c
     padding: (props) => (props.matches ? '2px' : 'auto'),
   },
   name: {
-    width: '20%',
+    width: (props) => (props.matches ? '30%' : '20%'),
   },
   address: {
     width: '30%',
@@ -44,7 +44,7 @@ const useStyles = makeStyles<Theme, Pick<StyleProps, 'matches'>>((_: Theme) => c
     width: '10%',
   },
   session: {
-    width: '20%',
+    width: (props) => (props.matches ? '30%' : '20%'),
   },
   notificationCell: {
     width: '10%',
@@ -84,32 +84,67 @@ const DataTable = ({
 
   return (
     <TableRow>
-      <TableCell className={classes.name}>
-        {slot.name}
-      </TableCell>
+      {!matches && (
+        <TableCell className={classes.name}>
+          {slot.name}
+        </TableCell>
+      )}
+      {matches && (
+        <>
+          <TableCell className={classes.name}>
+            {slot.name}
+            {' - '}
+            <strong>
+              {slot.pincode}
+            </strong>
+            {' - '}
+            <strong>
+              {slot.fee_type}
+            </strong>
+          </TableCell>
+          <TableCell className={clsx(
+            classes.tableCell,
+            classes.session,
+            [
+              getTotalSlots() > 0 ? classes.green : classes.red,
+            ],
+          )}
+          >
+            {slot.sessions?.filter((session: any) => session.min_age_limit === ageGroup).map((session: any) => (
+              <Typography key={session.session_id}>
+                {`${session.date} - ${session.available_capacity} doses - ${session.vaccine}`}
+              </Typography>
+            ))}
+          </TableCell>
+        </>
+      )}
       <TableCell className={classes.address}>
         {slot.address}
       </TableCell>
-      <TableCell className={classes.pinCode}>
-        {slot.pincode}
-      </TableCell>
-      <TableCell className={classes.fees}>
-        {slot.fee_type}
-      </TableCell>
-      <TableCell className={clsx(
-        classes.tableCell,
-        classes.session,
-        [
-          getTotalSlots() > 0 ? classes.green : classes.red,
-        ],
+      {!matches && (
+        <>
+          <TableCell className={classes.pinCode}>
+            {slot.pincode}
+          </TableCell>
+          <TableCell className={classes.fees}>
+            {slot.fee_type}
+          </TableCell>
+          <TableCell className={clsx(
+            classes.tableCell,
+            classes.session,
+            [
+              getTotalSlots() > 0 ? classes.green : classes.red,
+            ],
+          )}
+          >
+            {slot.sessions?.filter((session: any) => session.min_age_limit === ageGroup).map((session: any) => (
+              <Typography key={session.session_id}>
+                {`${session.date} - ${session.available_capacity} doses - ${session.vaccine}`}
+              </Typography>
+            ))}
+          </TableCell>
+        </>
       )}
-      >
-        {slot.sessions?.filter((session: any) => session.min_age_limit === ageGroup).map((session: any) => (
-          <Typography key={session.session_id}>
-            {`${session.date} - ${session.available_capacity} doses - ${session.vaccine}`}
-          </Typography>
-        ))}
-      </TableCell>
       <TableCell className={clsx(classes.notificationCell, classes.tableCell)} align="center">
         <Checkbox
           checked={isChecked(slot.center_id)}
