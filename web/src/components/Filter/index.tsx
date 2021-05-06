@@ -8,9 +8,10 @@ import {
   FormControlLabel,
   useMediaQuery,
   TextField,
-  FormHelperText,
 } from '@material-ui/core';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import ToggleButton from '@material-ui/lab/ToggleButton';
+import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 import times from 'lodash.times';
 import clsx from 'clsx';
 import SelectBox from '../Select';
@@ -51,6 +52,9 @@ const useStyles = makeStyles<Theme, Pick<StyleProps, 'matches'>>((theme: Theme) 
       height: 32,
     },
   },
+  formControlPin: {
+    width: (props) => (props.matches ? `calc(100% - ${2 * theme.spacing(1)}px)` : 500),
+  },
   label: {
     width: (props) => (props.matches ? 220 : 280),
     color: COLORS.black,
@@ -77,6 +81,38 @@ const useStyles = makeStyles<Theme, Pick<StyleProps, 'matches'>>((theme: Theme) 
     marginTop: -5,
     marginRight: 30,
     width: '100%',
+  },
+  toggleButtons: {
+    color: COLORS.fontBlack,
+    // '&.Mui-selected': {
+    //   backgroundColor: COLORS.skyBlue,
+    //   color: COLORS.white,
+    // },
+  },
+  active: {
+    backgroundColor: COLORS.skyBlue,
+    color: COLORS.violet,
+  },
+  boxWrapperMobile: {
+    display: 'grid',
+  },
+  boxWrapper: {
+    display: 'grid',
+    justifyContent: 'space-around',
+    width: '100%',
+    alignContent: 'center',
+    gridTemplateColumns: '30% 70%',
+  },
+  boxElement: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    width: '100%',
+    alignContent: 'center',
+  },
+  boxElementMobile: {
+    justifyContent: 'space-between',
+    width: '100%',
+    alignContent: 'center',
   },
 }));
 
@@ -141,118 +177,132 @@ const Filter = ({
       [classes.filterContainerMobile]: matches,
     })}
     >
-      <Box>
-        <FormControlLabel
-          control={(
-            <Checkbox
-              checked={searchByPin}
-              onChange={handleSearchByPinChange}
-              name="SearchByPin"
-              color="primary"
-            />
-          )}
-          label="Search By Pin"
-          className={clsx({
-            [classes.pinCodeNone]: !matches,
-            [classes.pinCodeBlocked]: matches,
-          })}
-        />
-        {
-          searchByPin && (
-            <FormControl className={classes.formControl}>
-              <TextField id="outlined-pin" variant="outlined" value={selectedPin} onChange={handlePinChange} />
-              <FormHelperText>Enter pin code comma separated(Max 6 allowed)</FormHelperText>
-            </FormControl>
-          )
-        }
-        {
-          !searchByPin && (
-            <>
-              <FormControl className={classes.formControl}>
-                <InputLabel id="state" className={classes.label}>State</InputLabel>
-                <SelectBox
-                  labelId="state"
-                  disableUnderline
-                  value={selectedState}
-                  onChange={handleStateChange}
-                >
-                  <MenuItem value={0} key={0} disabled>----Select State----</MenuItem>
-                  {statesList?.map((state: State) => (
-                    <MenuItem value={state.state_id} key={state.state_id}>{state.state_name}</MenuItem>
-                  ))}
-                </SelectBox>
-              </FormControl>
-              <FormControl className={classes.formControl}>
-                <InputLabel id="district" className={classes.label}>District</InputLabel>
-                <SelectBox
-                  labelId="district"
-                  disableUnderline
-                  value={selectedDistrict}
-                  onChange={handleDistrictChange}
-                >
-                  <MenuItem value={0} key={0} disabled>-----Select District----</MenuItem>
-                  {districtsList?.map((district: District) => (
-                    <MenuItem value={district.district_id} key={district.district_id}>{district.district_name}</MenuItem>
-                  ))}
-                </SelectBox>
-              </FormControl>
-            </>
-          )
-        }
-        <FormControl className={classes.formControl}>
-          <InputLabel id="age" className={classes.label}>Age Group</InputLabel>
-          <SelectBox
-            labelId="age"
-            disableUnderline
-            value={ageGroup}
-            onChange={handleAgeGroupChange}
-          >
-            <MenuItem value={0} key={0} disabled>--------Select Age Group--------</MenuItem>
-            <MenuItem value={18} key={1}>18-45</MenuItem>
-            <MenuItem value={45} key={2}>45+</MenuItem>
-          </SelectBox>
-        </FormControl>
-        <FormControl className={classes.formControl}>
-          <InputLabel id="refreshTime" className={classes.label}>Refresh Time Interval</InputLabel>
-          <SelectBox
-            labelId="refreshTime"
-            disableUnderline
-            value={refetchInterval}
-            onChange={handleRefetchChange}
-          >
-            <MenuItem value={0} key={0} disabled>-----Refresh Time Interval-----</MenuItem>
-            <MenuItem value={15} key={1}>15 Second(s)</MenuItem>
-            <MenuItem value={30} key={2}>30 Second(s)</MenuItem>
-            <MenuItem value={45} key={3}>45 Second(s)</MenuItem>
-            {times(30, (time: number) => (
-              <MenuItem value={(time + 1) * 60} key={time + 4}>{`${time + 1} Minute(s)`}</MenuItem>
-            ))}
-          </SelectBox>
-        </FormControl>
+      <Box mt={2}>
+        <ToggleButtonGroup
+          value={searchByPin}
+          exclusive
+          onChange={handleSearchByPinChange}
+          aria-label="search by"
+        >
+          <ToggleButton value aria-label="search by pin code" className={classes.toggleButtons}>
+            Pin Code
+          </ToggleButton>
+          <ToggleButton value={false} aria-label="centered" className={classes.toggleButtons}>
+            District
+          </ToggleButton>
+        </ToggleButtonGroup>
       </Box>
-      <Box>
-        <FormControlLabel
-          control={(
-            <Checkbox
-              checked={enableVoiceNotification}
-              onChange={handleVoiceNotificationChange}
-              name="VoiceNotification"
-              color="primary"
-            />
-          )}
-          label="Voice Notification"
-        />
-        <FormControlLabel
-          control={(
-            <Checkbox
-              checked={enableNotification}
-              onChange={handleNotificationChange}
-              name="PushNotification"
-              color="primary"
-            />
-          )}
-          label="Push Notification"
-        />
+      <Box
+        className={clsx({
+          [classes.boxWrapper]: !matches,
+          [classes.boxWrapperMobile]: matches,
+        })}
+      >
+        <Box className={clsx({
+          [classes.boxElement]: !matches,
+          [classes.boxElementMobile]: matches,
+        })}
+        >
+          {
+            searchByPin && (
+              <FormControl className={clsx(classes.formControl, classes.formControlPin)}>
+                <TextField id="outlined-pin" placeholder="Pin code comma separated(Max 6, No Spaces)" variant="outlined" value={selectedPin} onChange={handlePinChange} />
+              </FormControl>
+            )
+          }
+          {
+            !searchByPin && (
+              <>
+                <FormControl className={classes.formControl}>
+                  <InputLabel id="state" className={classes.label}>State</InputLabel>
+                  <SelectBox
+                    labelId="state"
+                    disableUnderline
+                    value={selectedState}
+                    onChange={handleStateChange}
+                  >
+                    <MenuItem value={0} key={0} disabled>----Select State----</MenuItem>
+                    {statesList?.map((state: State) => (
+                      <MenuItem value={state.state_id} key={state.state_id}>{state.state_name}</MenuItem>
+                    ))}
+                  </SelectBox>
+                </FormControl>
+                <FormControl className={classes.formControl}>
+                  <InputLabel id="district" className={classes.label}>District</InputLabel>
+                  <SelectBox
+                    labelId="district"
+                    disableUnderline
+                    value={selectedDistrict}
+                    onChange={handleDistrictChange}
+                  >
+                    <MenuItem value={0} key={0} disabled>-----Select District----</MenuItem>
+                    {districtsList?.map((district: District) => (
+                      <MenuItem value={district.district_id} key={district.district_id}>{district.district_name}</MenuItem>
+                    ))}
+                  </SelectBox>
+                </FormControl>
+              </>
+            )
+          }
+        </Box>
+        <Box className={clsx({
+          [classes.boxElement]: !matches,
+          [classes.boxElementMobile]: matches,
+        })}
+        >
+          <FormControl className={classes.formControl}>
+            <InputLabel id="age" className={classes.label}>Age Group</InputLabel>
+            <SelectBox
+              labelId="age"
+              disableUnderline
+              value={ageGroup}
+              onChange={handleAgeGroupChange}
+            >
+              <MenuItem value={0} key={0} disabled>--------Select Age Group--------</MenuItem>
+              <MenuItem value={18} key={1}>18-45</MenuItem>
+              <MenuItem value={45} key={2}>45+</MenuItem>
+            </SelectBox>
+          </FormControl>
+          <FormControl className={classes.formControl}>
+            <InputLabel id="refreshTime" className={classes.label}>Refresh Time Interval</InputLabel>
+            <SelectBox
+              labelId="refreshTime"
+              disableUnderline
+              value={refetchInterval}
+              onChange={handleRefetchChange}
+            >
+              <MenuItem value={0} key={0} disabled>-----Refresh Time Interval-----</MenuItem>
+              <MenuItem value={15} key={1}>15 Second(s)</MenuItem>
+              <MenuItem value={30} key={2}>30 Second(s)</MenuItem>
+              <MenuItem value={45} key={3}>45 Second(s)</MenuItem>
+              {times(30, (time: number) => (
+                <MenuItem value={(time + 1) * 60} key={time + 4}>{`${time + 1} Minute(s)`}</MenuItem>
+              ))}
+            </SelectBox>
+          </FormControl>
+          <FormControlLabel
+            control={(
+              <Checkbox
+                checked={enableVoiceNotification}
+                onChange={handleVoiceNotificationChange}
+                name="VoiceNotification"
+                color="primary"
+              />
+            )}
+            label="Voice Notification"
+          />
+          <FormControlLabel
+            control={(
+              <Checkbox
+                checked={enableNotification}
+                onChange={handleNotificationChange}
+                name="PushNotification"
+                color="primary"
+              />
+            )}
+            label="Push Notification"
+          />
+        </Box>
       </Box>
     </Box>
   );
