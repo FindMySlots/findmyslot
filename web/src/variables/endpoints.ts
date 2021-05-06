@@ -11,6 +11,10 @@ const END_POINTS = {
     url: 'https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/calendarByDistrict?district_id=',
     key: 'Calendar',
   },
+  Pin: {
+    url: 'https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/calendarByPin?pincode=',
+    key: 'Pin',
+  },
 };
 
 export default END_POINTS;

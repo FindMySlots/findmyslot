@@ -62,6 +62,8 @@ const Dashboard = () => {
     districtsList,
     selectedDistrict,
     setSelectedDistrict,
+    searchByPin,
+    selectedPin,
     refetchInterval,
     setRefetchInterval,
     enableVoiceNotification,
@@ -75,6 +77,8 @@ const Dashboard = () => {
     setAgeGroup,
     alert,
     setAlert,
+    setSelectedPin,
+    setSearchByPin,
   } = useDashboard();
   const matches = useMediaQuery('(max-width:768px)');
   const classes = useStyles({ matches });
@@ -106,6 +110,10 @@ const Dashboard = () => {
         setEnableNotification={setEnableNotification}
         ageGroup={ageGroup}
         setAgeGroup={setAgeGroup}
+        setSelectedPin={setSelectedPin}
+        setSearchByPin={setSearchByPin}
+        searchByPin={searchByPin}
+        selectedPin={selectedPin ?? ''}
       />
       <DataTable
         slotsList={slotsList}
