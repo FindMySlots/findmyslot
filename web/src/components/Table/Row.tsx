@@ -4,9 +4,10 @@ import {
   TableCell,
   Typography,
   Checkbox,
+  useMediaQuery,
 } from '@material-ui/core';
 import clsx from 'clsx';
-import { createStyles, makeStyles } from '@material-ui/core/styles';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import COLORS from '../../variables/colors';
 
 interface Props {
@@ -16,15 +17,22 @@ interface Props {
   ageGroup: number,
 }
 
-const useStyles = makeStyles(() => createStyles({
+interface StyleProps {
+  matches: boolean
+}
+
+const useStyles = makeStyles<Theme, Pick<StyleProps, 'matches'>>((_: Theme) => createStyles({
   red: {
     backgroundColor: COLORS.carnationOverlay,
   },
   green: {
     backgroundColor: COLORS.emeraldOverlay,
   },
+  tableCell: {
+    padding: (props) => (props.matches ? '2px' : 'auto'),
+  },
   name: {
-    width: '20%',
+    width: (props) => (props.matches ? '30%' : '20%'),
   },
   address: {
     width: '30%',
@@ -36,7 +44,7 @@ const useStyles = makeStyles(() => createStyles({
     width: '10%',
   },
   session: {
-    width: '20%',
+    width: (props) => (props.matches ? '30%' : '20%'),
   },
   notificationCell: {
     width: '10%',
@@ -48,8 +56,9 @@ const DataTable = ({
   setStopNotifications,
   ageGroup,
   slot,
-} : Props) => {
-  const classes = useStyles();
+}: Props) => {
+  const matches = useMediaQuery('(max-width:768px)');
+  const classes = useStyles({ matches });
 
   const isChecked = (centerID: number) => stopNotifications.indexOf(centerID.toString()) === -1;
 
@@ -75,26 +84,68 @@ const DataTable = ({
 
   return (
     <TableRow>
-      <TableCell className={classes.name}>
-        {slot.name}
-      </TableCell>
+      {!matches && (
+        <TableCell className={classes.name}>
+          {slot.name}
+        </TableCell>
+      )}
+      {matches && (
+        <>
+          <TableCell className={classes.name}>
+            {slot.name}
+            {' - '}
+            <strong>
+              {slot.pincode}
+            </strong>
+            {' - '}
+            <strong>
+              {slot.fee_type}
+            </strong>
+          </TableCell>
+          <TableCell className={clsx(
+            classes.tableCell,
+            classes.session,
+            [
+              getTotalSlots() > 0 ? classes.green : classes.red,
+            ],
+          )}
+          >
+            {slot.sessions?.filter((session: any) => session.min_age_limit === ageGroup).map((session: any) => (
+              <Typography key={session.session_id}>
+                {`${session.date} - ${session.available_capacity} doses - ${session.vaccine}`}
+              </Typography>
+            ))}
+          </TableCell>
+        </>
+      )}
       <TableCell className={classes.address}>
         {slot.address}
       </TableCell>
-      <TableCell className={classes.pinCode}>
-        {slot.pincode}
-      </TableCell>
-      <TableCell className={classes.fees}>
-        {slot.fee_type}
-      </TableCell>
-      <TableCell className={clsx(classes.session, getTotalSlots() > 0 ? classes.green : classes.red)}>
-        {slot.sessions?.filter((session: any) => session.min_age_limit === ageGroup).map((session: any) => (
-          <Typography key={session.session_id}>
-            {`${session.date} - ${session.available_capacity} doses - ${session.vaccine}`}
-          </Typography>
-        ))}
-      </TableCell>
-      <TableCell className={clsx(classes.notificationCell)} align="center">
+      {!matches && (
+        <>
+          <TableCell className={classes.pinCode}>
+            {slot.pincode}
+          </TableCell>
+          <TableCell className={classes.fees}>
+            {slot.fee_type}
+          </TableCell>
+          <TableCell className={clsx(
+            classes.tableCell,
+            classes.session,
+            [
+              getTotalSlots() > 0 ? classes.green : classes.red,
+            ],
+          )}
+          >
+            {slot.sessions?.filter((session: any) => session.min_age_limit === ageGroup).map((session: any) => (
+              <Typography key={session.session_id}>
+                {`${session.date} - ${session.available_capacity} doses - ${session.vaccine}`}
+              </Typography>
+            ))}
+          </TableCell>
+        </>
+      )}
+      <TableCell className={clsx(classes.notificationCell, classes.tableCell)} align="center">
         <Checkbox
           checked={isChecked(slot.center_id)}
           onChange={() => handleChange(slot.center_id)}
