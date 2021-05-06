@@ -80,7 +80,7 @@ const Dashboard = () => {
           Keep this page open in browser, enable the Voice and Push Notification. Whenever the slot is available within next 7 days you&#39;ll receive the notification.
           Click on push notification should take you to the
           {' '}
-          <Link className={classes.linkClass} href="https://selfregistration.cowin.gov.in/">Co-Win</Link>
+          <Link target="_blank" className={classes.linkClass} href="https://selfregistration.cowin.gov.in/">Co-Win</Link>
           {' '}
           Portal. This website does not collect your data. Best used in desktop/laptop browsers.
           For mobile users, mobile should be on and may not get push notification.
@@ -114,20 +114,20 @@ const Dashboard = () => {
         <span style={{ color: '#ea4e4e' }}>&#9829;</span>
         {' '}
         by
-        <Link className={classes.link} href="https://www.linkedin.com/in/mehulcse">Mehul</Link>
+        <Link className={classes.link} target="_blank" href="https://www.linkedin.com/in/mehulcse">Mehul</Link>
         ,
-        <Link className={classes.link} href="https://www.linkedin.com/in/jitesh-manglani-full-stack">Jitesh</Link>
+        <Link className={classes.link} target="_blank" href="https://www.linkedin.com/in/jitesh-manglani-full-stack">Jitesh</Link>
         ,
-        <Link className={classes.link} href="https://www.linkedin.com/in/durgaprasad-budhwani">Durgaprasad</Link>
+        <Link className={classes.link} target="_blank" href="https://www.linkedin.com/in/durgaprasad-budhwani">Durgaprasad</Link>
         ,
-        <Link className={classes.link} href="https://www.linkedin.com/in/nitishkalra-uiaspects">Nitish</Link>
+        <Link className={classes.link} target="_blank" href="https://www.linkedin.com/in/nitishkalra-uiaspects">Nitish</Link>
         {' '}
         &
-        <Link className={classes.link} href="https://www.linkedin.com/in/abhishek-thorat-143aa2bb">Abhishek</Link>
+        <Link className={classes.link} target="_blank" href="https://www.linkedin.com/in/abhishek-thorat-143aa2bb">Abhishek</Link>
       </Typography>
       <Typography align="center" className={classes.footerFeedback}>
         Please report the issues/suggestions
-        <Link className={classes.link} href="https://github.com/mehulcse/findmyslot/issues">here</Link>
+        <Link className={classes.link} target="_blank" href="https://github.com/mehulcse/findmyslot/issues">here</Link>
         {' '}
         or send an email to
         {' '}
