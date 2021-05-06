@@ -78,7 +78,7 @@ const useDashboard = () => {
     },
   );
 
-  const pincodes = searchByPin ? selectedPin.split(',', 5) : [];
+  const pincodes = searchByPin ? selectedPin.split(',', 6) : [];
 
   const fetchByPin = async ({ queryKey } : any) => {
     const res = await axios.get(`${END_POINTS.Pin.url}${queryKey?.[2]}&date=${date.current}`);

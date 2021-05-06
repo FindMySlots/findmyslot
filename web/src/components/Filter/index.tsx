@@ -48,6 +48,7 @@ const useStyles = makeStyles<Theme, Pick<StyleProps, 'matches'>>((theme: Theme) 
     width: (props) => (props.matches ? 160 : 240),
     '& .MuiInputBase-root': {
       marginTop: theme.spacing(3),
+      height: 32,
     },
   },
   label: {
@@ -64,8 +65,17 @@ const useStyles = makeStyles<Theme, Pick<StyleProps, 'matches'>>((theme: Theme) 
     width: '100%',
   },
   filterContainerMobile: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(2, 1fr)',
+    display: 'block',
+    padding: 10,
+  },
+  pinCodeNone: {
+    marginTop: 22,
+    marginRight: 30,
+  },
+  pinCodeBlocked: {
+    marginTop: -5,
+    marginRight: 30,
+    width: '100%',
   },
 }));
 
@@ -125,11 +135,10 @@ const Filter = ({
   };
 
   return (
-    <Box
-      className={clsx({
-        [classes.filterContainerDesktop]: !matches,
-        [classes.filterContainerMobile]: matches,
-      })}
+    <Box className={clsx({
+      [classes.filterContainerDesktop]: !matches,
+      [classes.filterContainerMobile]: matches,
+    })}
     >
       <Box>
         <FormControlLabel
@@ -142,13 +151,14 @@ const Filter = ({
             />
           )}
           label="Search By Pin"
+          className={clsx({
+            [classes.pinCodeNone]: !matches,
+            [classes.pinCodeBlocked]: matches,
+          })}
         />
-      </Box>
-      <Box>
         {
           searchByPin && (
             <FormControl className={classes.formControl}>
-              <InputLabel id="pin" className={classes.label}>Pin</InputLabel>
               <TextField id="outlined-pin" variant="outlined" value={selectedPin} onChange={handlePinChange} />
               <FormHelperText>Enter pin code comma separated(Max 6 allowed)</FormHelperText>
             </FormControl>
@@ -215,6 +225,8 @@ const Filter = ({
             ))}
           </SelectBox>
         </FormControl>
+      </Box>
+      <Box>
         <FormControlLabel
           control={(
             <Checkbox
