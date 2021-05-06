@@ -136,7 +136,7 @@ const DataTable = ({
               stopNotifications={stopNotifications}
               key={slot.center_id}
             />
-          )) : (<TableRow><TableCell colSpan={4} align="center">No slots are available as of now. Don&#39;t worry, I will notify you as soon as I find the slot.</TableCell></TableRow>)}
+          )) : (<TableRow><TableCell colSpan={6} align="center">No slots are available as of now. Don&#39;t worry, I will notify you as soon as I find the slot.</TableCell></TableRow>)}
         </TableBody>
       </Table>
     </TableContainer>
