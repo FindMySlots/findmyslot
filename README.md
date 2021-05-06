@@ -1,6 +1,6 @@
 To start the project, will need to do
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-6-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-7-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 Project Link: https://www.findmyslots.com/
@@ -48,6 +48,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="http://durgaprasad-budhwani.com/"><img src="https://avatars.githubusercontent.com/u/993962?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Durgaprasad</b></sub></a><br /><a href="#ideas-Durgaprasad-Budhwani" title="Ideas, Planning, & Feedback">🤔</a> <a href="https://github.com/mehulcse/findmyslot/commits?author=Durgaprasad-Budhwani" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/nitish-kalra-9"><img src="https://avatars.githubusercontent.com/u/69498008?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Nitish Kalra</b></sub></a><br /><a href="#ideas-nitish-kalra-9" title="Ideas, Planning, & Feedback">🤔</a> <a href="https://github.com/mehulcse/findmyslot/commits?author=nitish-kalra-9" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/AbhishekThorat"><img src="https://avatars.githubusercontent.com/u/18628649?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Abhishek Thorat</b></sub></a><br /><a href="https://github.com/mehulcse/findmyslot/commits?author=AbhishekThorat" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/npahal"><img src="https://avatars.githubusercontent.com/u/22569691?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Nitin pahal</b></sub></a><br /><a href="https://github.com/mehulcse/findmyslot/commits?author=npahal" title="Code">💻</a></td>
   </tr>
 </table>
 
