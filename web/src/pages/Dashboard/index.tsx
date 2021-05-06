@@ -4,6 +4,7 @@ import Alert from '@material-ui/lab/Alert';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import Fab from '@material-ui/core/Fab';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
+import GitHubIcon from '@material-ui/icons/GitHub';
 import Filter from '../../components/Filter';
 import useDashboard from './dashboard-hook';
 import Loader from '../../components/Loader/loader';
@@ -45,6 +46,10 @@ const useStyles = makeStyles<Theme, Pick<StyleProps, 'matches'>>((theme: Theme) 
     color: COLORS.violet,
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1),
+  },
+  icon: {
+    height: (props) => (props.matches ? '10px' : '12px'),
+    width: (props) => (props.matches ? '10px' : '12px'),
   },
 }));
 
@@ -130,8 +135,13 @@ const Dashboard = () => {
         <Link className={classes.link} target="_blank" href="https://github.com/mehulcse/findmyslot/issues">here</Link>
         {' '}
         or send an email to
+        <Link className={classes.link} href="mailto:mehulthakkar02@gmail.com">mehulthakkar02@gmail.com</Link>
+        .
         {' '}
-        <Link href="mailto:mehulthakkar02@gmail.com">mehulthakkar02@gmail.com</Link>
+        For contribution, visit
+        <Link className={classes.link} href="https://github.com/mehulcse/findmyslot">
+          <GitHubIcon className={classes.icon} />
+        </Link>
       </Typography>
       <Loader open={loading} />
       {
