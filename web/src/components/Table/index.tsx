@@ -27,15 +27,21 @@ interface StyleProps {
 }
 
 const useStyles = makeStyles<Theme, Pick<StyleProps, 'matches'>>((theme: Theme) => createStyles({
-  container: {
-    height: (props) => (props.matches ? 'calc(100vh - 300px)' : 'calc(100vh - 200px)'),
+  container: (props) => ({
     overflowX: 'auto',
     marginRight: 'auto',
     marginLeft: 'auto',
     marginTop: '50',
     padding: '10',
     margin: '10',
-  },
+    ...props.matches ? {
+      // To let nested sticky elements work as expected.
+      height: '100%',
+      display: 'initial',
+    } : {
+      height: 'calc(100vh - 200px)',
+    },
+  }),
   icon: {
     height: '16px',
     width: '16px',
@@ -46,17 +52,19 @@ const useStyles = makeStyles<Theme, Pick<StyleProps, 'matches'>>((theme: Theme) 
     paddingBottom: 0,
   },
   tableCell: {
+    padding: '4px 0',
+    verticalAlign: 'middle',
     fontSize: (props) => (props.matches ? '10px' : '14px'),
   },
   table: {
-    minWidth: 1000,
+    minWidth: 400,
   },
   notificationCell: {
     whiteSpace: 'nowrap',
     width: '10%',
   },
   name: {
-    width: '20%',
+    width: (props) => (props.matches ? '30%' : '20%'),
   },
   address: {
     width: '30%',
@@ -68,7 +76,12 @@ const useStyles = makeStyles<Theme, Pick<StyleProps, 'matches'>>((theme: Theme) 
     width: '10%',
   },
   session: {
-    width: '20%',
+    width: (props) => (props.matches ? '30%' : '20%'),
+  },
+  tableHead: {
+    position: 'sticky',
+    top: 0,
+    zIndex: 1,
   },
 }));
 
@@ -77,7 +90,7 @@ const DataTable = ({
   stopNotifications = [],
   setStopNotifications,
   ageGroup,
-} : Props) => {
+}: Props) => {
   const matches = useMediaQuery('(max-width:768px)');
   const classes = useStyles({ matches });
 
@@ -95,23 +108,32 @@ const DataTable = ({
   return (
     <TableContainer className={classes.container}>
       <Table stickyHeader className={classes.table}>
-        <TableHead>
+        <TableHead className={classes.tableHead}>
           <TableRow>
             <TableCell className={clsx(classes.tableCell, classes.name)}>
               Center Name
             </TableCell>
+            {matches && (
+              <TableCell className={clsx(classes.tableCell, classes.session)} align="center">
+                Session(s)
+              </TableCell>
+            )}
             <TableCell className={clsx(classes.tableCell, classes.address)}>
               Address
             </TableCell>
-            <TableCell className={clsx(classes.tableCell, classes.pinCode)}>
-              Pin Code
-            </TableCell>
-            <TableCell className={clsx(classes.tableCell, classes.fees)}>
-              Fee Type
-            </TableCell>
-            <TableCell className={clsx(classes.tableCell, classes.session)} align="center">
-              Session(s)
-            </TableCell>
+            {!matches && (
+              <>
+                <TableCell className={clsx(classes.tableCell, classes.pinCode)}>
+                  Pin Code
+                </TableCell>
+                <TableCell className={clsx(classes.tableCell, classes.fees)}>
+                  Fee Type
+                </TableCell>
+                <TableCell className={clsx(classes.tableCell, classes.session)} align="center">
+                  Session(s)
+                </TableCell>
+              </>
+            )}
             <TableCell className={clsx(classes.tableCell, classes.notificationCell)}>
               <Checkbox
                 checked={notifyAll}
@@ -121,7 +143,13 @@ const DataTable = ({
                 className={classes.checkbox}
               />
               Notification
-              <Tooltip title="Uncheck this if you wish to stop notification for individual centers" aria-label="Preview">
+              <Tooltip
+                title={
+                  `${matches ? 'Notification:' : ''}
+                  Uncheck this if you wish to stop notification for individual centers`
+                }
+                aria-label="Preview"
+              >
                 <HelpOutlineIcon className={classes.icon} />
               </Tooltip>
             </TableCell>

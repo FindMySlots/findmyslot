@@ -39,7 +39,7 @@ interface StyleProps {
 const useStyles = makeStyles<Theme, Pick<StyleProps, 'matches'>>((theme: Theme) => createStyles({
   formControl: {
     margin: theme.spacing(1),
-    width: (props) => (props.matches ? 160 : 240),
+    width: (props) => (props.matches ? `calc(50% - ${2 * theme.spacing(1)}px)` : 240),
     '& .MuiInputBase-root': {
       marginTop: theme.spacing(3),
     },
@@ -58,8 +58,9 @@ const useStyles = makeStyles<Theme, Pick<StyleProps, 'matches'>>((theme: Theme) 
     width: '100%',
   },
   filterContainerMobile: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(2, 1fr)',
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'space-around',
   },
 }));
 
@@ -78,7 +79,7 @@ const Filter = ({
   setEnableNotification,
   ageGroup,
   setAgeGroup,
-} : Props) => {
+}: Props) => {
   const matches = useMediaQuery('(max-width:768px)');
   const classes = useStyles({ matches });
   const handleStateChange = (event: React.ChangeEvent<{ value: unknown }>) => {
