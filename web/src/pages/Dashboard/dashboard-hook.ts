@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { NumberParam, useQueryParam, withDefault, BooleanParam, ArrayParam } from 'use-query-params';
+import { NumberParam, useQueryParam, withDefault, BooleanParam, ArrayParam, StringParam } from 'use-query-params';
 import axios from 'axios';
 import {
   useQuery,
@@ -14,7 +14,7 @@ import useSpeechSynthesis from '../../util/useSpeechSynthesis';
 const useDashboard = () => {
   const [selectedState, setSelectedState] = useQueryParam('state', withDefault(NumberParam, 0));
   const [searchByPin, setSearchByPin] = useQueryParam('searchByPin', withDefault(BooleanParam, false));
-  const [selectedPin, setSelectedPin] = useQueryParam('pin', withDefault(ArrayParam, []));
+  const [selectedPin, setSelectedPin] = useQueryParam('pin', withDefault(StringParam, ''));
   const [selectedDistrict, setSelectedDistrict] = useQueryParam('district', withDefault(NumberParam, 0));
   const [refetchInterval, setRefetchInterval] = useQueryParam('interval', withDefault(NumberParam, 1));
   const [enableVoiceNotification, setEnableVoiceNotification] = useQueryParam('voice', withDefault(BooleanParam, true));
@@ -30,6 +30,9 @@ const useDashboard = () => {
       const res = await axios.get(END_POINTS.State.url);
       return res.data;
     },
+    {
+      enabled: !searchByPin,
+    },
   );
 
   const { data: districts, isFetching: loadingDistrict } = useQuery(
@@ -39,7 +42,7 @@ const useDashboard = () => {
       return res.data;
     },
     {
-      enabled: !!selectedState,
+      enabled: !!selectedState && !searchByPin,
     },
   );
 
@@ -75,10 +78,10 @@ const useDashboard = () => {
     },
   );
 
-  const pincodes = searchByPin ? selectedPin.slice(0, 5) : [];
+  const pincodes = searchByPin ? selectedPin.split(',', 5) : [];
 
-  const fetchByPin = async ({ queryKeys } : any) => {
-    const res = await axios.get(`${END_POINTS.Pin.url}${queryKeys?.[1]}&date=${date.current}`);
+  const fetchByPin = async ({ queryKey } : any) => {
+    const res = await axios.get(`${END_POINTS.Pin.url}${queryKey?.[2]}&date=${date.current}`);
     const targetSlot = res.data?.centers?.filter((center: any) => center.sessions.find((session: any) => session.min_age_limit === (ageGroup || 18)));
     const available = res.data?.centers?.filter((center: any) => center.sessions.find((session: any) => session.min_age_limit === (ageGroup || 18) && session.available_capacity > 0));
     // @ts-ignore
@@ -137,6 +140,8 @@ const useDashboard = () => {
     selectedDistrict,
     setSelectedDistrict,
     selectedState,
+    selectedPin,
+    searchByPin,
     setSelectedState,
     setSearchByPin,
     setSelectedPin,
