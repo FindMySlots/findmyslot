@@ -86,8 +86,8 @@ const Dashboard = () => {
     <Box width="100%">
       {alert && (
         <Alert className={classes.topLabel} severity="warning" onClose={() => setAlert(false)}>
-          Keep this page open in browser, enable the Voice and Push Notification. Whenever the slot is available within next 7 days you&#39;ll receive the notification.
-          Click on push notification should take you to the
+          Keep this page open in browser, enable the Voice and Push Notification. Whenever a slot is available within next 7 days, You&#39;ll receive the notification.
+          A click on push notification should take you to the
           {' '}
           <Link target="_blank" className={classes.linkClass} href="https://selfregistration.cowin.gov.in/">Co-Win</Link>
           {' '}
