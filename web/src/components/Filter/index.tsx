@@ -184,11 +184,11 @@ const Filter = ({
           onChange={handleSearchByPinChange}
           aria-label="search by"
         >
-          <ToggleButton value aria-label="search by pin code" className={classes.toggleButtons}>
-            Pin Code
-          </ToggleButton>
           <ToggleButton value={false} aria-label="centered" className={classes.toggleButtons}>
             District
+          </ToggleButton>
+          <ToggleButton value aria-label="search by pin code" className={classes.toggleButtons}>
+            Pin Code
           </ToggleButton>
         </ToggleButtonGroup>
       </Box>
