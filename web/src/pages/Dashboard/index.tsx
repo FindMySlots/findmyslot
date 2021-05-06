@@ -134,9 +134,11 @@ const Dashboard = () => {
         <Link className={classes.link} target="_blank" href="https://www.linkedin.com/in/durgaprasad-budhwani">Durgaprasad</Link>
         ,
         <Link className={classes.link} target="_blank" href="https://www.linkedin.com/in/nitishkalra-uiaspects">Nitish</Link>
+        ,
+        <Link className={classes.link} target="_blank" href="https://www.linkedin.com/in/abhishek-thorat-143aa2bb">Abhishek</Link>
         {' '}
         &
-        <Link className={classes.link} target="_blank" href="https://www.linkedin.com/in/abhishek-thorat-143aa2bb">Abhishek</Link>
+        <Link className={classes.link} target="_blank" href="https://www.linkedin.com/in/npahal/">Nitin</Link>
       </Typography>
       <Typography align="center" className={classes.footerFeedback}>
         Please report the issues/suggestions
