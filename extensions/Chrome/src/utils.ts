@@ -3,15 +3,15 @@ import axios from "axios";
 export interface cowinData {
     age: { '18': boolean; '45': boolean; };
     date: string;
-    state_id: string;
-    district_id: string;
+    state: { state_id: string; state_name: string; };
+    district: { district_id: string; district_name: string; };
     pincodes: string[];
     enableVoiceNotification: boolean;
     enableNotification: boolean;
 }
 
 export function checkSlots(resp: cowinData) {
-    if (resp.district_id) {
+    if (resp.district && resp.district.district_id) {
         getSlotsByDistrict(resp)
     } else if (resp.pincodes?.length) {
         getSlotsByPincodes(resp)
@@ -21,11 +21,11 @@ export function checkSlots(resp: cowinData) {
 function getSlotsByDistrict({
     age,
     date,
-    district_id,
+    district,
     enableVoiceNotification,
     enableNotification
 }: cowinData) {
-    axios.get(`https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/calendarByDistrict?district_id=${district_id}&date=${date}`)
+    axios.get(`https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/calendarByDistrict?district_id=${district.district_id}&date=${date}`)
         .then(res => checkAvailableAndShowNotifications(res, age['18'] && age['45'] ? false : age['18'] ? 18 : age['45'] ? 45 : false, enableVoiceNotification, enableNotification));
 }
 
@@ -64,9 +64,25 @@ function showNotifications(available: any[], enableVoiceNotification: boolean, e
             audio.play();
         }
         if (enableNotification) {
+            const doses: { 18: number, 45: number } = availableForNotification
+                .reduce((sessions, center) => sessions.concat(center.sessions), [])
+                .reduce((doseObj: { 18: number, 45: number }, session: { available_capacity: number; min_age_limit: 18 | 45 }) => {
+                    if (session.min_age_limit == 18) {
+                        doseObj[18]++
+                    }
+                    if (session.min_age_limit == 45) {
+                        doseObj[45]++
+                    }
+                    return doseObj
+                }, { 18: 0, 45: 0 })
+            let contextMsg = 'Doses:'
+            if (doses[18]) { contextMsg += ` 18 -> ${doses[18]}` }
+            if (doses[45]) { contextMsg += ` 45 -> ${doses[45]}` }
+            chrome.notifications.clear('notification');
             chrome.notifications.create('notification', {
                 title: 'Vaccine Available',
-                message: `Vaccine available in ${availableForNotification.length} centers`,
+                message: 'Close to stop notifications, Click to go to COWIN site',
+                contextMessage: contextMsg,
                 type: 'basic',
                 iconUrl: './icon128.png',
                 isClickable: true,

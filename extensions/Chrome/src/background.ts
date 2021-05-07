@@ -16,6 +16,6 @@ chrome.notifications.onClicked.addListener(() => {
 })
 
 chrome.notifications.onClosed.addListener(() => {
-    console.log()
+    chrome.storage.local.clear();
     chrome.alarms.clearAll();
 })

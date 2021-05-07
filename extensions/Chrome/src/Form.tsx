@@ -7,8 +7,8 @@ import { checkSlots, cowinData } from "./utils";
 const Form = () => {
     const [loading, setLoading] = useState(true);
     const [searchBase, setSearchBase] = useState<'district' | 'pincode'>('district');
-    const [state, setState] = useState('');
-    const [district, setDistrict] = useState('');
+    const [state, setState] = useState<{ state_id: string; state_name: string; }>();
+    const [district, setDistrict] = useState<{ district_id: string; district_name: string; }>();
     const [enableVoiceNotification, setEnableVoiceNotification] = useState(true);
     const [enableNotification, setEnableNotification] = useState(true);
     const [stateList, setStateList] = useState<any[]>([]);
@@ -27,11 +27,11 @@ const Form = () => {
                 age,
                 date,
                 enableVoiceNotification,
-                enableNotification,
-                state_id: state
+                enableNotification
             }
-            if (searchBase === 'district') {
-                cowin_data['district_id'] = district;
+            if (searchBase == 'district') {
+                cowin_data['district'] = district;
+                cowin_data['state'] = state;
             } else {
                 cowin_data['pincodes'] = pinCodes.replace(/\s/g, '').split(',');
             }
@@ -41,6 +41,7 @@ const Form = () => {
                 cowin_data
             });
             chrome.alarms.clearAll();
+            chrome.notifications.clear('notification');
             chrome.alarms.create('refresh', { periodInMinutes: time });
         }
     }
@@ -55,46 +56,56 @@ const Form = () => {
 
     const handleStateChange = (event: any) => {
         setLoading(true);
-        setState(event.target.value);
-        axios.get(`https://cdn-api.co-vin.in/api/v2/admin/location/districts/${event.target.value}`).then(res => {
-            setDistrictList(res.data.districts)
+        const stateId = event.target.value;
+        const stateFromStateList = stateList.find(state => state.state_id == stateId);
+        async function getDistricts() {
+            const districtResponse = await axios.get(`https://cdn-api.co-vin.in/api/v2/admin/location/districts/${stateId}`)
+            setDistrictList(districtResponse.data.districts)
+            setState(stateFromStateList);
             setLoading(false);
-        });
+        }
+        getDistricts();
     }
 
     const handleDistrictChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        setDistrict(event.target.value)
+        const districtId = event.target.value;
+        const districtFromDistrictList = districtList.find(district => district.district_id == districtId);
+        setDistrict(districtFromDistrictList);
     }
 
     const handleReset = () => {
         setNotificationData(undefined);
         chrome.storage.local.clear();
+        chrome.alarms.clearAll();
+        chrome.notifications.clear('notification');
     }
 
     React.useEffect(() => {
+        let stateResponse: any;
+        async function getStates() {
+            stateResponse = await axios.get("https://cdn-api.co-vin.in/api/v2/admin/location/states")
+            setStateList(stateResponse.data.states);
+            setLoading(false);
+        }
+        getStates();
         chrome.storage.local.get('cowin_data', ({ cowin_data }) => {
-            console.log(cowin_data)
             if (cowin_data) {
-                const { district_id, pincodes, age, state_id } = cowin_data;
-                setNotificationData(cowin_data);
-                if (district_id) {
+                const { district, pincodes, age, state } = cowin_data;
+                if (district) {
                     setSearchBase('district')
-                    setState(state_id);
-                    handleStateChange({ target: { value: state } })
-                    setDistrict(district_id);
+                    setState(state);
+                    handleStateChange({ target: { value: state.state_id } })
+                    setDistrict(district);
                 } else {
                     setSearchBase('pincode')
-                    setPinCodes(pincodes.join(','));
+                    setPinCodes(pincodes?.join(','));
                 }
                 setAge(age);
                 setEnableNotification(cowin_data.enableNotification);
                 setEnableVoiceNotification(cowin_data.enableVoiceNotification);
+                setNotificationData(cowin_data);
             }
         })
-        axios.get("https://cdn-api.co-vin.in/api/v2/admin/location/states").then(res => {
-            setStateList(res.data.states);
-            setLoading(false);
-        });
         for (let i = 0; i < 30; i++) {
             timeList.push({ seconds: (i + 1), timeDisplay: `${i + 1} Minute(s)` })
         }
@@ -109,8 +120,8 @@ const Form = () => {
                         <div className="inputs-margin">
                             Notifications active for&nbsp;
                             {
-                                searchBase === 'district'
-                                    ? `${districtList.find(district => district.district_id === district)}, ${stateList.find(state => state.state_id === state)}.`
+                                searchBase == 'district'
+                                    ? `${district?.district_name}, ${state?.state_name}.`
                                     : `Pincodes: ${pinCodes}.`
                             }
                         </div>
@@ -135,21 +146,20 @@ const Form = () => {
                         <div className="text-center margin-bottom">
                             <button type="button" className={age['18'] ? 'active' : ''} onClick={() => setAge({ ...age, '18': !age['18'] })}>18 - 44</button>
                             <button type="button" className={age['45'] ? 'active' : ''} onClick={() => setAge({ ...age, '45': !age['45'] })}>45+</button>
-                            <button type="button" className={searchBase === 'district' ? 'active' : ''} onClick={() => setSearchBase('district')}>District</button>
-                            <button type="button" className={searchBase === 'pincode' ? 'active' : ''} onClick={() => setSearchBase('pincode')}>Pincode</button>
+                            <button type="button" className={searchBase == 'district' ? 'active' : ''} onClick={() => setSearchBase('district')}>District</button>
+                            <button type="button" className={searchBase == 'pincode' ? 'active' : ''} onClick={() => setSearchBase('pincode')}>Pincode</button>
                         </div>
-
                         {
                             loading
                                 ? <p className="text-center">Loading . . .</p>
                                 : <>
                                     {
-                                        searchBase === 'district'
+                                        searchBase == 'district'
                                             ? (
                                                 <>
                                                     <label htmlFor="district" className="inputs-margin">Select State:</label>
                                                     <select
-                                                        defaultValue={state}
+                                                        defaultValue={state?.state_id}
                                                         onChange={handleStateChange}
                                                         id="state"
                                                         name="State"
@@ -164,7 +174,7 @@ const Form = () => {
                                                         state && (<>
                                                             <label htmlFor="district" className="inputs-margin">Select District:</label>
                                                             <select
-                                                                defaultValue={district}
+                                                                defaultValue={district?.district_id}
                                                                 onChange={handleDistrictChange}
                                                                 id="district"
                                                                 name="District"
@@ -208,7 +218,7 @@ const Form = () => {
                             ))}
                         </select>
                         <div className="text-center margin-bottom">
-                            <button type="button" onClick={setData} disabled={searchBase === 'district' ? (!state || !district) : pinCodes.length < 6}>
+                            <button type="button" onClick={setData} disabled={searchBase == 'district' ? (!district?.district_id) : pinCodes?.length < 6}>
                                 Schedule Notifications
                             </button>
                         </div>
