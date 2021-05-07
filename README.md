@@ -19,8 +19,8 @@ We are using Co-Win's [Public APIs](https://apisetu.gov.in/public/marketplace/ap
 ## Scope
 
 - [X] District Based Calendar
-- [ ] Pin code Based search
-- [ ] UX Review & Style enhancement
+- [x] Pin code Based search
+- [x] UX Review & Style enhancement
 - [ ] Chrome Extension
 
 ## Credit
