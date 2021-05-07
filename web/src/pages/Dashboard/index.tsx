@@ -91,7 +91,7 @@ const Dashboard = () => {
           {' '}
           <Link target="_blank" className={classes.linkClass} href="https://selfregistration.cowin.gov.in/">Co-Win</Link>
           {' '}
-          Portal. This website does not collect your data. Best used in desktop/laptop browsers.
+          Portal. Currently according to public cowin API, data is cached and may be upto 30 minutes old.This website does not collect your data. Best used in desktop/laptop browsers.
           For mobile users, mobile should be on and may not get push notification.
         </Alert>
       )}
