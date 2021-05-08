@@ -1,5 +1,5 @@
 {
-  "name": "FindMySlots",
+  "name": "find-my-slots",
   "version": "0.0.1",
   "description": "Covid Vaccine slot availability tacker",
   "scripts": {

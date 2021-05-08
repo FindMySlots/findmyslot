@@ -8,7 +8,7 @@ const App = () => {
         <div className="App">
             <header className="App-header">
                 <h3 className="text-center">
-                    Covid Vaccine slot availability tacker
+                    Find my slots - Covid Vaccine slot availability tacker
                 </h3>
             </header>
             <Form/>
