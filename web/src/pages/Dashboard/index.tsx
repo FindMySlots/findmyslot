@@ -42,6 +42,14 @@ const useStyles = makeStyles<Theme, Pick<StyleProps, 'matches'>>((theme: Theme) 
     padding: theme.spacing(2),
     borderRadius: 0,
   },
+  warningLabel: {
+    width: '100%',
+    justifyContent: 'center',
+    fontSize: '16px',
+    marginBottom: theme.spacing(1),
+    padding: theme.spacing(2),
+    borderRadius: 0,
+  },
   linkClass: {
     color: COLORS.violet,
     marginLeft: theme.spacing(1),
@@ -79,11 +87,35 @@ const Dashboard = () => {
     setAlert,
     setSelectedPin,
     setSearchByPin,
+    warning,
+    setWarning,
   } = useDashboard();
   const matches = useMediaQuery('(max-width:768px)');
   const classes = useStyles({ matches });
   return (
     <Box width="100%">
+      {warning && (
+        <Alert className={classes.warningLabel} severity="error" onClose={() => setWarning(false)}>
+          <Typography>
+            {' '}
+            Dear user, Currently the public data provided by CoWin app are
+            {' '}
+            <strong>not</strong>
+            {' '}
+            returning realtime slots.
+            We strongly recommend you to visit
+            {' '}
+            <Link target="_blank" href="https://selfregistration.cowin.gov.in/">Co-Win</Link>
+            {' '}
+            to
+            {' '}
+            <strong>search</strong>
+            {' '}
+            & book directly. We are trying to get in touch with the concerned authorities to find a solution for this issue.
+            Please comeback later & check again. #PleaseGetVaccinated #IndiaFightsCorona
+          </Typography>
+        </Alert>
+      )}
       {alert && (
         <Alert className={classes.topLabel} severity="warning" onClose={() => setAlert(false)}>
           Keep this page open in browser, enable the Voice and Push Notification. Whenever a slot is available within next 7 days, You&#39;ll receive the notification.

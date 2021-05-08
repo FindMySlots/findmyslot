@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { NumberParam, useQueryParam, withDefault, BooleanParam, ArrayParam, StringParam } from 'use-query-params';
 import axios from 'axios';
 import {
@@ -22,6 +22,7 @@ const useDashboard = () => {
   const [stopNotifications, setStopNotifications] = useQueryParam('stopNotifications', withDefault(ArrayParam, []));
   const [ageGroup, setAgeGroup] = useQueryParam('age', withDefault(NumberParam, 18));
   const [alert, setAlert] = useQueryParam('alert', withDefault(BooleanParam, true));
+  const [warning, setWarning] = useState(true);
   const { speak } = useSpeechSynthesis({});
   const date = useRef(format(new Date(), 'dd-MM-yyyy'));
   const { data: statesList, isFetching: loadingStates } = useQuery(
@@ -175,6 +176,8 @@ const useDashboard = () => {
     setAgeGroup,
     alert,
     setAlert,
+    warning,
+    setWarning,
   };
 };
 
