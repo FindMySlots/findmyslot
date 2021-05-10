@@ -1,5 +1,5 @@
 {
-  "name": "Covid Vaccine Slot Tracker",
+  "name": "FindMySlots - Covid Vaccine Slot Tracker",
   "description": "Covid Vaccine slot availability tacker",
   "manifest_version": 2,
   "version": "1.0.0",
@@ -10,8 +10,8 @@
   },
   "browser_action": {
     "default_icon": {
-      "16": "icon16.png",
-      "48": "icon48.png"
+      "16": "logo.png",
+      "48": "logo.png"
     },
     "default_popup": "popup.html"
   },
@@ -24,7 +24,8 @@
   "permissions": [
     "alarms",
     "tabs",
-    "storage"
+    "storage",
+    "notifications"
   ],
   "content_scripts": [
     {

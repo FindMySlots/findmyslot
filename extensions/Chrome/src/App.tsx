@@ -7,12 +7,9 @@ const App = () => {
     return (
         <div className="App">
             <header className="App-header">
-                <div>
-                    <img src={logo} className="App-logo" alt="logo"/>
-                </div>
-                <p>
-                    Covid Vaccine slot availability tacker
-                </p>
+                <h3 className="text-center">
+                    Find my slots - Covid Vaccine slot availability tacker
+                </h3>
             </header>
             <Form/>
         </div>
